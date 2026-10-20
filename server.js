@@ -30,7 +30,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // app.use('/api/stats', require('./server/routes/stats'));
 
 // 3. Nguyễn Như Hồng Hạnh (Blog & Posts):
-// app.use('/api/posts', require('./server/routes/posts'));
+ app.use('/api/posts', require('./server/routes/posts'));
 
 // 4. Nguyễn Nữ Hồng Nhung (Shop & Products):
 // app.use('/api/products', require('./server/routes/products'));
