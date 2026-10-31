@@ -40,7 +40,40 @@ Hệ thống đáp ứng trọn vẹn và hoàn chỉnh tất cả các yêu c�
 8. **Giao diện hiện đại (Wow factor):** Hỗ trợ chuyển đổi giao diện Sáng / Tối (Light / Dark mode), responsive mượt mà trên máy tính và điện thoại.
 
 ---
+---
 
+##  CHI TIẾT PHÂN HỆ BLOG & BÀI VIẾT THỜI TRANG (Contributor 2 - Nguyễn Như Hồng Hạnh)
+
+Phân hệ Quản lý tin tức và bài viết thời trang do **Nguyễn Như Hồng Hạnh** đảm nhiệm toàn diện từ Backend đến Frontend:
+
+### 1. Các file đóng góp chính:
+- **Backend API:** `server/routes/posts.js` (Xử lý toàn bộ logic CRUD bài viết, tự động đếm lượt xem, tìm kiếm từ khóa và lọc chủ đề).
+- **Unit Tests:** `tests/posts.test.js` (14 bài kiểm thử tự động độc lập đạt PASS 100%).
+- **Frontend Logic:** `public/js/blog.js` (Hiển thị danh sách bài viết phân trang, tìm kiếm thời gian thực, xem chi tiết và modal soạn thảo).
+- **Frontend Stylesheet:** `public/css/blog.css` (Giao diện lưới bài viết 16:9, khung tìm kiếm, layout đọc bài chi tiết và avatar tác giả).
+
+### 2. Các tính năng nổi bật:
+- **Lưới bài viết chuẩn tỷ lệ vàng 16:9:** Thiết kế card bài viết hiện đại, hiển thị ảnh bìa sắc nét, nhãn chủ đề và tóm tắt ngắn.
+- **Tìm kiếm theo thời gian thực:** Hỗ trợ tìm bài viết theo từ khóa trong tiêu đề và nội dung ngay khi gõ phím.
+- **Lọc theo chủ đề thời trang:** Lọc nhanh các bài viết theo xu hướng, phong cách phối đồ, chăm sóc trang phục...
+- **Trang đọc bài viết chi tiết:** Tự động tăng lượt xem (`views`), hiển thị thông tin tác giả, ngày đăng và danh sách các bài viết cùng chủ đề liên quan.
+- **Quản lý bài viết (CRUD):** Cho phép người dùng đăng nhập viết bài mới, tác giả hoặc Admin có quyền chỉnh sửa và xóa bài viết.
+
+### 3. Danh sách RESTful API Blog:
+
+| Phương thức | Đường dẫn API | Chức năng chi tiết | Quyền hạn |
+| :---: | :--- | :--- | :---: |
+| **GET** | `/api/posts` | Lấy danh sách bài viết (hỗ trợ phân trang, tìm kiếm từ khóa `q`, lọc theo `category`) | Công khai (Tất cả) |
+| **GET** | `/api/posts/:id` | Xem chi tiết bài viết theo ID và tự động tăng 1 lượt xem | Công khai (Tất cả) |
+| **POST** | `/api/posts` | Tạo bài viết thời trang mới (hỗ trợ tải file ảnh bìa) | Đăng nhập (User/Admin) |
+| **PUT** | `/api/posts/:id` | Chỉnh sửa và cập nhật bài viết | Chính tác giả hoặc Admin |
+| **DELETE**| `/api/posts/:id` | Xóa bài viết khỏi hệ thống | Chính tác giả hoặc Admin |
+
+### 4. Lệnh kiểm thử tự động phân hệ Blog:
+```bash
+npx jest tests/posts.test.js
+```
+*(Kết quả: 14/14 tests pass 100%)*
 ## 🚀 Hướng Dẫn Cài Đặt & Chạy Ứng Dụng
 
 ### 1. Yêu cầu hệ thống
