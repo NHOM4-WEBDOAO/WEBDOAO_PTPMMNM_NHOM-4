@@ -126,6 +126,25 @@ Phân hệ Quản lý hồ sơ người dùng và lịch sử mua sắm do **Pha
 - **Kiểm thử tự động toàn diện:** 100% test case độc lập bảo đảm API hoạt động ổn định và chính xác trên môi trường CI/CD.
 
 ---
+---
+
+## 🛒 CHI TIẾT PHÂN HỆ GIỎ HÀNG, ĐẶT HÀNG & QUẢN TRỊ ADMIN (Contributor 3 - Dương Quốc Bảo)
+
+Phân hệ Giỏ hàng, Quy trình Đặt hàng và Bảng điều khiển Quản trị hệ thống (Admin Portal) do **Dương Quốc Bảo (Contributor 3 / Triage Manager)** đảm nhiệm toàn diện:
+
+### 1. Các file đóng góp chính:
+- **Backend API Đơn hàng:** `server/routes/orders.js` (Xử lý quy trình tạo đơn hàng mới, tính toán tiền hàng, lưu chi tiết giỏ hàng và cập nhật trạng thái đơn).
+- **Backend API Thống kê:** `server/routes/stats.js` (Tổng hợp số liệu doanh thu, số đơn, sản phẩm, bài viết và khách hàng phục vụ Dashboard).
+- **Unit Tests Đơn hàng & Thống kê:** `tests/orders.test.js` (9 test case) và `tests/stats.test.js` (2 test case) đạt chuẩn PASS 100%.
+- **Frontend Logic Admin:** `public/js/admin.js` (Hiển thị số liệu thống kê thời gian thực, quản lý và duyệt trạng thái đơn hàng, điều khiển danh mục sản phẩm).
+- **Frontend Stylesheet Admin:** `public/css/admin.css` (Giao diện bảng điều khiển thẻ thống kê đa màu sắc, bảng quản lý đơn hàng chuẩn UX/UI responsive).
+
+### 2. Các tính năng nổi bật:
+- **Giỏ hàng & Đặt hàng linh hoạt:** Hỗ trợ lưu giỏ hàng, đặt hàng vãng lai (Guest Checkout) hoặc lưu vết lịch sử theo tài khoản người dùng đăng nhập.
+- **Thống kê Dashboard trực quan:** Hiển thị tức thì tổng doanh thu thực tế, tổng số đơn hàng đã đặt, số lượng sản phẩm và người dùng đang hoạt động.
+- **Quản lý vòng đời đơn hàng:** Cho phép Quản trị viên theo dõi và cập nhật trạng thái xử lý đơn hàng theo 5 giai đoạn: *Chờ xử lý ➔ Đang đóng gói ➔ Đang giao ➔ Đã giao ➔ Đã hủy*.
+- **Phân quyền bảo mật:** Sử dụng middleware `requireAdmin` chặn đứng truy cập trái phép của người dùng thông thường vào số liệu tài chính và quản trị.
+- **Kiểm thử tự động vững chắc:** Bao phủ 100% các kịch bản ngoại lệ giỏ hàng rỗng, thiếu thông tin giao hàng và phân quyền Admin.
 
 ## 📁 Cấu Trúc Thư Mục Dự Án
 
