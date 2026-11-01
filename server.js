@@ -22,8 +22,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // CÁC TUYẾN ĐƯỜNG API (ROUTES) CỦA 4 THÀNH VIÊN
 // (Thành viên nào nộp bài thì mở comment dòng tương ứng của mình)
 // ==========================================================
-// 1. Nguyễn Thế Nhất (Auth & OTP):
+// 1. Nguyễn Thế Nhất (Auth & OTP & Security):
  app.use('/api/auth', require('./server/routes/auth'));
+ app.use('/api/security', require('./server/routes/security'));
 
 // 2. Dương Quốc Bảo (Orders & Stats):
 app.use('/api/orders', require('./server/routes/orders'));

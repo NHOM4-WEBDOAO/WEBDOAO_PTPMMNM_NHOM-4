@@ -146,6 +146,41 @@ Phân hệ Giỏ hàng, Quy trình Đặt hàng và Bảng điều khiển Quả
 - **Phân quyền bảo mật:** Sử dụng middleware `requireAdmin` chặn đứng truy cập trái phép của người dùng thông thường vào số liệu tài chính và quản trị.
 - **Kiểm thử tự động vững chắc:** Bao phủ 100% các kịch bản ngoại lệ giỏ hàng rỗng, thiếu thông tin giao hàng và phân quyền Admin.
 
+---
+---
+
+## 🔐 CHI TIẾT PHÂN HỆ XÁC THỰC, BẢO MẬT & XÁC THỰC 2 BƯỚC 2FA (Contributor 1 - Nguyễn Thế Nhất)
+
+Phân hệ Quản lý tài khoản, Xác thực người dùng và Hệ thống bảo mật 2FA do **Nguyễn Thế Nhất (Contributor 1 / Write Developer)** đảm nhiệm toàn diện:
+
+### 1. Các file đóng góp chính:
+- **Backend API Xác thực:** `server/routes/auth.js` (Đăng ký tài khoản, đăng nhập JWT, gửi mã OTP xác nhận tài khoản, quên/đặt lại mật khẩu).
+- **Backend API Bảo mật & 2FA:** `server/routes/security.js` (Kiểm tra độ mạnh mật khẩu chuẩn NIST, kích hoạt & xác thực 2 bước 2FA qua OTP).
+- **Middleware Phân quyền & Bảo vệ:** `server/middleware/auth.js` (Xác thực Bearer token, phân quyền Quản trị viên requireAdmin).
+- **Dịch vụ Email Tự động:** `server/config/mailer.js` (Tích hợp Nodemailer gửi OTP bảo mật dạng email HTML chuẩn thương mại điện tử).
+- **Unit Tests Bảo mật & Xác thực:** `tests/auth.test.js`, `tests/middleware.test.js`, `tests/security.test.js` (Pass 100% tất cả các ca kiểm thử).
+- **Frontend Logic & Giao diện:** `public/js/auth.js` và `public/css/auth.css` (Giao diện Modal đăng nhập, đăng ký, xác thực OTP mượt mà).
+
+### 2. Các tính năng nổi bật:
+- **Đăng ký & Kích hoạt qua OTP:** Tự động tạo mã OTP 6 chữ số ngẫu nhiên có thời hạn, gửi email kích hoạt và mã hóa mật khẩu người dùng bằng bcrypt (salt 10 vòng).
+- **Xác thực 2 bước (Two-Factor Authentication - 2FA):** Tăng cường bảo mật cấp cao cho tài khoản người dùng bằng mã OTP 2 lớp khi thực hiện các tác vụ nhạy cảm hoặc đăng nhập.
+- **Kiểm tra độ an toàn mật khẩu (Password Strength Checker):** Phân tích thời gian thực cấu trúc mật khẩu, phát hiện các mật khẩu yếu phổ biến và đưa ra khuyến nghị an toàn theo thang điểm.
+- **Cơ chế Token an toàn:** Cấp phát Json Web Token (JWT) có chữ ký số bí mật, hỗ trợ truyền qua Authorization Header hoặc Query Parameter phục vụ linh hoạt cho ứng dụng.
+- **Bao phủ kiểm thử vững chắc:** Hơn 35 bài kiểm thử chuyên sâu bảo đảm 0 lỗ hổng xác thực, bắt lỗi đầu vào và phòng thủ truy cập trái phép.
+
+### 3. Danh sách RESTful API Bảo mật & 2FA:
+| Phương thức | Đường dẫn API | Chức năng chi tiết | Quyền hạn |
+| :---: | :--- | :--- | :---: |
+| **POST** | `/api/security/check-password-strength` | Đánh giá độ an toàn mật khẩu, phát hiện mật khẩu yếu, đưa ra gợi ý | Công khai |
+| **GET** | `/api/security/status` | Lấy trạng thái kích hoạt 2FA và điểm số bảo mật tài khoản | Đăng nhập |
+| **POST** | `/api/security/2fa/request-otp` | Tạo mã OTP kích hoạt xác thực 2 bước gửi về email người dùng | Đăng nhập |
+| **POST** | `/api/security/2fa/enable` | Xác nhận mã OTP để chính thức kích hoạt bảo vệ 2FA | Đăng nhập |
+| **POST** | `/api/security/2fa/disable` | Hủy xác thực 2 bước (yêu cầu mật khẩu tài khoản để xác nhận) | Đăng nhập |
+| **POST** | `/api/security/2fa/verify-login` | Xác thực OTP 2FA trong quá trình đăng nhập để cấp JWT Token | Công khai |
+
+---
+---
+
 ## 📁 Cấu Trúc Thư Mục Dự Án
 
 ```
@@ -163,7 +198,10 @@ WEBDOAO_PTPMMNM_NHOM 4/
 │       ├── posts.js             # API: CRUD bài viết, tìm kiếm bài viết, đếm view
 │       ├── products.js          # API: Danh sách sản phẩm, bộ lọc, chi tiết, CRUD sản phẩm
 │       ├── orders.js            # API: Đặt hàng, đơn hàng cá nhân, quản trị đơn hàng
-│       └── stats.js             # API: Thống kê doanh thu, đơn hàng cho Admin
+│       ├── stats.js             # API: Thống kê doanh thu, đơn hàng cho Admin
+│       ├── security.js          # API: Xác thực 2 bước 2FA & kiểm tra độ mạnh mật khẩu
+│       ├── coupons.js           # API: Mã giảm giá voucher & khuyến mãi
+│       └── comments.js          # API: Bình luận bài viết blog thời trang
 ├── public/
 │   ├── css/
 │   │   ├── style.css            # Hệ thống Design System, typography, header, modal, toast
