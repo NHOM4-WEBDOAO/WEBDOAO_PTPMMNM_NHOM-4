@@ -25,6 +25,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 // 1. Nguyễn Thế Nhất (Auth & OTP & Security):
  app.use('/api/auth', require('./server/routes/auth'));
  app.use('/api/security', require('./server/routes/security'));
+ app.use('/api/sessions', require('./server/routes/sessions'));
 
 // 2. Dương Quốc Bảo (Orders & Stats):
 app.use('/api/orders', require('./server/routes/orders'));
