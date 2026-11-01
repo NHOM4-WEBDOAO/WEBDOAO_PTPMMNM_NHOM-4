@@ -27,7 +27,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // 2. Dương Quốc Bảo (Orders & Stats):
 app.use('/api/orders', require('./server/routes/orders'));
-/// app.use('/api/stats', require('./server/routes/stats'));
+app.use('/api/stats', require('./server/routes/stats'));
 
 // 3. Nguyễn Như Hồng Hạnh (Blog & Posts):
 // app.use('/api/posts', require('./server/routes/posts'));
