@@ -153,6 +153,8 @@ Phân hệ Giỏ hàng, Quy trình Đặt hàng và Bảng điều khiển Quả
 
 Phân hệ Quản lý tài khoản, Xác thực người dùng và Hệ thống bảo mật 2FA do **Nguyễn Thế Nhất (Contributor 1 / Write Developer)** đảm nhiệm toàn diện:
 
+- **Backend API Phiên đăng nhập:** `server/routes/sessions.js` (Ghi nhận địa chỉ IP, loại thiết bị Desktop/Mobile, thu hồi phiên và đăng xuất từ xa).
+
 ### 1. Các file đóng góp chính:
 - **Backend API Xác thực:** `server/routes/auth.js` (Đăng ký tài khoản, đăng nhập JWT, gửi mã OTP xác nhận tài khoản, quên/đặt lại mật khẩu).
 - **Backend API Bảo mật & 2FA:** `server/routes/security.js` (Kiểm tra độ mạnh mật khẩu chuẩn NIST, kích hoạt & xác thực 2 bước 2FA qua OTP).
@@ -177,7 +179,11 @@ Phân hệ Quản lý tài khoản, Xác thực người dùng và Hệ thống 
 | **POST** | `/api/security/2fa/enable` | Xác nhận mã OTP để chính thức kích hoạt bảo vệ 2FA | Đăng nhập |
 | **POST** | `/api/security/2fa/disable` | Hủy xác thực 2 bước (yêu cầu mật khẩu tài khoản để xác nhận) | Đăng nhập |
 | **POST** | `/api/security/2fa/verify-login` | Xác thực OTP 2FA trong quá trình đăng nhập để cấp JWT Token | Công khai |
-
+| **GET** | `/api/sessions` | Lấy danh sách các phiên đăng nhập của người dùng | Đăng nhập |
+| **POST** | `/api/sessions/record` | Ghi nhận phiên đăng nhập và thiết bị truy cập mới | Đăng nhập |
+| **DELETE** | `/api/sessions/:id` | Thu hồi / Đăng xuất một phiên làm việc cụ thể | Đăng nhập |
+| **POST** | `/api/sessions/revoke-all` | Đăng xuất tài khoản khỏi tất cả các thiết bị khác | Đăng nhập |
+| **GET** | `/api/sessions/active-count` | Đếm số lượng phiên làm việc đang hoạt động | Đăng nhập |
 ---
 ---
 
