@@ -37,7 +37,7 @@ app.use('/api/orders', require('./server/routes/orders'));
 // ==========================================================
 app.use('/api/posts', require('./server/routes/posts'));
 
-app.use('/api/user', require('./server/routes/user'));
+app.use('/api/comments', require('./server/routes/comments'));
 
 // Health check
 app.get('/api/health', (req, res) => {
