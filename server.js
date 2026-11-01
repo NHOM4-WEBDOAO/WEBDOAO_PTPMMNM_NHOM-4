@@ -27,7 +27,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // 2. Dương Quốc Bảo (Orders & Stats):
 app.use('/api/orders', require('./server/routes/orders'));
+app.use('/api/coupons', require('./server/routes/coupons'));
 app.use('/api/stats', require('./server/routes/stats'));
+
 
 // 3. Nguyễn Như Hồng Hạnh (Blog & Posts):
 // app.use('/api/posts', require('./server/routes/posts'));
@@ -40,6 +42,8 @@ app.use('/api/stats', require('./server/routes/stats'));
 app.use('/api/posts', require('./server/routes/posts'));
 app.use('/api/comments', require('./server/routes/comments'));
 app.use('/api/user', require('./server/routes/user'));
+
+
 
 // Health check
 app.get('/api/health', (req, res) => {
