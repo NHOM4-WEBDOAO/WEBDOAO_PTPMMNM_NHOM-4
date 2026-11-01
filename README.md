@@ -105,6 +105,28 @@ Hệ thống đã nạp sẵn dữ liệu mẫu cùng 2 tài khoản thử nghi�
 
 ---
 
+
+---
+
+## 👤 CHI TIẾT PHÂN HỆ HỒ SƠ NGƯỜI DÙNG & LỊCH SỬ ĐƠN HÀNG (Trưởng nhóm - Phan Tấn Kiệt)
+
+Phân hệ Quản lý hồ sơ người dùng và lịch sử mua sắm do **Phan Tấn Kiệt (Trưởng nhóm / Maintainer)** đảm nhiệm toàn diện từ Backend, Kiểm thử tự động đến Giao diện Frontend:
+
+### 1. Các file đóng góp chính:
+- **Backend API:** `server/routes/user.js` (Xử lý các API lấy hồ sơ cá nhân, cập nhật họ tên/SĐT/địa chỉ nhận hàng, đổi avatar và truy xuất lịch sử đơn hàng của người dùng).
+- **Unit Tests:** `tests/user.test.js` (4 bài kiểm thử bảo mật & nghiệp vụ tự động đạt PASS 100%).
+- **Frontend Logic:** `public/js/profile.js` (Hiển thị hồ sơ, xử lý form cập nhật thông tin và render danh sách đơn hàng đã mua).
+- **Frontend Stylesheet:** `public/css/profile.css` (Giao diện Profile dạng lưới 2 cột hiện đại: sidebar avatar & điều hướng bên trái, panel chi tiết & danh sách đơn hàng bên phải).
+
+### 2. Các tính năng nổi bật:
+- **Bảo mật truy cập thông tin:** Chỉ người dùng đã đăng nhập với token JWT hợp lệ mới có quyền truy cập và chỉnh sửa hồ sơ.
+- **Quản lý thông tin nhận hàng:** Cho phép người dùng linh hoạt cập nhật số điện thoại và địa chỉ giao hàng phục vụ đặt đơn nhanh chóng.
+- **Cập nhật ảnh đại diện (Avatar):** Tích hợp tải ảnh trực tiếp, cập nhật ngay lập tức trên hệ thống.
+- **Theo dõi lịch sử đơn hàng cá nhân:** Hiển thị chi tiết từng đơn hàng đã đặt gồm mã đơn, ngày mua, trạng thái xử lý và tổng tiền.
+- **Kiểm thử tự động toàn diện:** 100% test case độc lập bảo đảm API hoạt động ổn định và chính xác trên môi trường CI/CD.
+
+---
+
 ## 📁 Cấu Trúc Thư Mục Dự Án
 
 ```
