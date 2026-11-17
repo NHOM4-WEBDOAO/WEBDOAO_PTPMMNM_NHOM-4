@@ -6,11 +6,12 @@ Cảm ơn bạn đã tham gia phát triển dự án AURA FASHION (Nhóm 4, môn
 
 | Vai trò | Quyền GitHub | Thành viên |
 |---|---|---|
-| Quản trị viên | Admin | Nguyễn Nữ Hồng Nhung |
+| Quản trị viên | Admin | Phan tấn kiêt |
 | Người duy trì | Maintain | Phan Tấn Kiệt |
-| Người đóng góp | Write | Nguyễn Thế Nhất |
-| Người phân loại | Triage | Dương Quốc Bảo |
-| Người xem | Read | Nguyễn Như Hồng Hạnh |
+| Người đóng góp | Write 1 | Nguyễn Thế Nhất |
+| Người đóng góp | Write 2 | Nguyễn Như Hồng Hạnh |
+| Người đóng góp | Write 3 | Dương Quốc Bảo |
+| Người đóng góp | Write 4| Nguyễn Nữ Hồng Nhung |
 
 ## Phân công file và vị trí kích hoạt của 5 thành viên (bao gồm Trưởng nhóm)
 
@@ -94,3 +95,39 @@ Tạo **Issue** mới trên GitHub, ghi rõ:
 ## Quy tắc ứng xử
 
 Tôn trọng, lịch sự và hỗ trợ lẫn nhau trong nhóm eheh.
+
+---
+
+## 👗 CHI TIẾT PHÂN HỆ CỬA HÀNG & QUẢN LÝ SẢN PHẨM (Contributor 4 - Nguyễn Nữ Hồng Nhung)
+
+Phân hệ Quản lý sản phẩm, Danh mục và Cửa hàng thời trang (Shop) do **Nguyễn Nữ Hồng Nhung** (Admin / Owner) đảm nhiệm toàn diện:
+
+### 1. Các file đóng góp chính:
+- **Backend API:** `server/routes/products.js` (Xử lý toàn bộ logic CRUD sản phẩm, phân loại danh mục, tìm kiếm, lọc theo khoảng giá, sắp xếp giá bán và upload hình ảnh qua Multer).
+- **Unit Tests:** `tests/products.test.js` (Bộ 8 bài kiểm thử tự động độc lập đạt PASS 100%).
+- **Frontend Logic:** `public/js/shop.js` (Hiển thị danh sách sản phẩm dạng lưới, bộ lọc danh mục động, tìm kiếm thời gian thực, xem chi tiết sản phẩm, chọn size/màu và thêm vào giỏ hàng).
+- **Frontend Stylesheet:** `public/css/shop.css` (Giao diện cửa hàng thời trang responsive, thiết kế card sản phẩm hiện đại, hiệu ứng hover, badge giảm giá và bộ lọc giá).
+
+### 2. Các tính năng nổi bật:
+- **Lưới sản phẩm thời trang hiện đại:** Hiển thị ảnh sản phẩm sắc nét, tên, giá bán, giá gốc và nhãn giảm giá nổi bật.
+- **Bộ lọc đa tiêu chí thông minh:** Lọc theo danh mục (Áo, Quần, Áo khoác, Váy đầm, Phụ kiện), tìm kiếm theo từ khóa và lọc theo khoảng giá.
+- **Sắp xếp linh hoạt:** Sắp xếp sản phẩm theo giá tăng dần, giá giảm dần hoặc sản phẩm mới nhất.
+- **Modal chi tiết sản phẩm:** Xem ảnh lớn, mô tả chất liệu, chọn Size (S, M, L, XL), chọn màu sắc và số lượng trước khi thêm vào giỏ hàng.
+- **Quản lý sản phẩm (CRUD dành cho Admin):** Thêm sản phẩm mới với ảnh tải lên từ máy tính, chỉnh sửa thông tin giá và tồn kho, xóa sản phẩm.
+
+### 3. Danh sách RESTful API Cửa hàng (Shop & Products):
+
+| Phương thức | Đường dẫn API | Chức năng chi tiết | Quyền hạn |
+| :---: | :--- | :--- | :---: |
+| **GET** | `/api/products/categories/all` | Lấy toàn bộ danh mục sản phẩm | Công khai (Tất cả) |
+| **GET** | `/api/products` | Lấy danh sách sản phẩm (hỗ trợ lọc theo `category`, `search`, `minPrice`, `maxPrice`, `sort`) | Công khai (Tất cả) |
+| **GET** | `/api/products/:id` | Xem chi tiết sản phẩm theo ID hoặc Slug | Công khai (Tất cả) |
+| **POST** | `/api/products` | Thêm sản phẩm thời trang mới (hỗ trợ upload ảnh Multer) | Quản trị viên (Admin) |
+| **PUT** | `/api/products/:id` | Cập nhật thông tin, giá bán và tồn kho sản phẩm | Quản trị viên (Admin) |
+| **DELETE**| `/api/products/:id` | Xóa sản phẩm khỏi hệ thống | Quản trị viên (Admin) |
+
+### 4. Lệnh kiểm thử tự động phân hệ Sản phẩm:
+```bash
+npx jest tests/products.test.js
+```
+*(Kết quả: 8/8 tests pass 100%)*
