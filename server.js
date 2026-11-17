@@ -38,6 +38,8 @@ app.use('/api/stats', require('./server/routes/stats'));
 
 // 4. Nguyễn Nữ Hồng Nhung (Shop & Products):
  app.use('/api/products', require('./server/routes/products'));
+
+  app.use('/api/wishlist', require('./server/routes/wishlist'));
 // ==========================================================
 
 
