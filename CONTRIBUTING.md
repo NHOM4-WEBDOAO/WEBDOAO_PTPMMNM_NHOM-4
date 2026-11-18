@@ -11,20 +11,19 @@ Cảm ơn bạn đã tham gia phát triển dự án AURA FASHION (Nhóm 4, môn
 | Người đóng góp | Write 1 | Nguyễn Thế Nhất |
 | Người đóng góp | Write 2 | Nguyễn Như Hồng Hạnh |
 | Người đóng góp | Write 3 | Dương Quốc Bảo |
-| Người đóng góp | Write 4| Nguyễn Nữ Hồng Nhung |
+| Người đóng góp | Write 4 | Nguyễn Nữ Hồng Nhung |
 
 ## Phân công file và vị trí kích hoạt của 5 thành viên (bao gồm Trưởng nhóm)
 
-| Thành viên                  | File chức năng cần tạo                                                                                                                        | File Test cần viết                                     | Vị trí mở kích hoạt trong code                                                                                                                                               |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1. Nguyễn Thế Nhất**      | • `server/routes/auth.js`<br>• `server/routes/security.js`<br>• `server/routes/sessions.js`<br>• `server/config/mailer.js`<br>• `server/middleware/auth.js`<br>• `public/js/auth.js`<br>• `public/css/auth.css` | • `tests/auth.test.js`<br>• `tests/security.test.js`<br>• `tests/sessions.test.js`<br>• `tests/middleware.test.js` | • `server.js`: mở `/api/auth`, `/api/security`, `/api/sessions`<br>• `public/index.html`: mở `auth.css` và `auth.js` |
-| **2. Dương Quốc Bảo**       | • `server/routes/orders.js`<br>• `server/routes/stats.js`<br>• `public/js/admin.js`<br>• `public/css/admin.css`                               | • `tests/orders.test.js`<br>• `tests/stats.test.js`    | • `server.js` (dòng 29-30): mở `/api/orders` & `/api/stats`<br>• `public/index.html`: mở `admin.css` và `admin.js`                                                           |
-| **3. Nguyễn Như Hồng Hạnh** | • `server/routes/posts.js`<br>• `public/js/blog.js`<br>• `public/css/blog.css`                                                                | • `tests/posts.test.js`                                | • `server.js` (dòng 33): mở `/api/posts`<br>• `public/index.html`: mở `blog.css` và `blog.js`                                                                                |
-| **4. Nguyễn Nữ Hồng Nhung** | • `server/routes/products.js`<br>• `public/js/shop.js`<br>• `public/css/shop.css`                                                             | • `tests/products.test.js`                             | • `server.js` (dòng 36): mở `/api/products`<br>• `public/index.html`: mở `shop.css` và `shop.js`                                                                             |
+| Thành viên | File chức năng cần tạo | File Test cần viết | Vị trí mở kích hoạt trong code |
+|---|---|---|---|
+| **1. Nguyễn Thế Nhất** | • `server/routes/auth.js`<br>• `server/routes/security.js`<br>• `server/routes/sessions.js`<br>• `server/config/mailer.js`<br>• `server/middleware/auth.js`<br>• `public/js/auth.js`<br>• `public/css/auth.css` | • `tests/auth.test.js`<br>• `tests/security.test.js`<br>• `tests/sessions.test.js`<br>• `tests/middleware.test.js` | • `server.js`: mở `/api/auth`, `/api/security`, `/api/sessions`<br>• `public/index.html`: mở `auth.css` và `auth.js` |
+| **2. Dương Quốc Bảo** | • `server/routes/orders.js`<br>• `server/routes/stats.js`<br>• `public/js/admin.js`<br>• `public/css/admin.css` | • `tests/orders.test.js`<br>• `tests/stats.test.js` | • `server.js` (dòng 29-30): mở `/api/orders` & `/api/stats`<br>• `public/index.html`: mở `admin.css` và `admin.js` |
+| **3. Nguyễn Như Hồng Hạnh** | • `server/routes/posts.js`<br>• `public/js/blog.js`<br>• `public/css/blog.css` | • `tests/posts.test.js` | • `server.js` (dòng 33): mở `/api/posts`<br>• `public/index.html`: mở `blog.css` và `blog.js` |
+| **4. Nguyễn Nữ Hồng Nhung** | • `server/routes/products.js`<br>• `public/js/shop.js`<br>• `public/css/shop.css` | • `tests/products.test.js` | • `server.js` (dòng 36): mở `/api/products`<br>• `public/index.html`: mở `shop.css` và `shop.js` |
 | **5. Phan Tấn Kiệt (Trưởng nhóm)** | • `server/routes/user.js`<br>• `public/js/profile.js`<br>• `public/css/profile.css` | • `tests/user.test.js` | • `server.js` (dòng 27): mở `app.use('/api/user', ...)`<br>• `public/index.html`: mở `profile.css` và `profile.js` |
 
->  **Mẹo:** Toàn bộ code hoàn chỉnh và test đã được sao lưu tại nhánh `backup/full-project-with-tests`. Thành viên chỉ cần lấy đúng file của mình và tạo PR
-
+> **Mẹo:** Toàn bộ code hoàn chỉnh và test đã được sao lưu tại nhánh `backup/full-project-with-tests`. Thành viên chỉ cần lấy đúng file của mình và tạo PR.
 
 ## Cài đặt môi trường
 
@@ -37,25 +36,25 @@ npm install
 node server.js
 ```
 
-Sau đó mở trình duyệt tại địa chỉ hiển thị trong terminal (thường là `http://localhost:3000`).
+Sau đó mở trình duyệt tại địa chỉ hiển thị trong terminal (thường là `http://localhost:5000`).
 
 ## Quy trình làm việc
 
 1. Cập nhật nhánh `main` mới nhất:
 ```bash
-   git checkout main
-   git pull
+git checkout main
+git pull
 ```
 2. Tạo nhánh mới cho công việc của bạn:
 ```bash
-   git checkout -b feat/ten-chuc-nang
+git checkout -b feat/ten-chuc-nang
 ```
 3. Viết code, tự chạy thử trước khi commit.
 4. Commit và push:
 ```bash
-   git add .
-   git commit -m "feat: thêm giỏ hàng"
-   git push -u origin feat/ten-chuc-nang
+git add .
+git commit -m "feat: thêm chức năng"
+git push -u origin feat/ten-chuc-nang
 ```
 5. Mở **Pull Request** vào nhánh `main` và mô tả rõ bạn đã làm gì.
 6. Chờ ít nhất **1 thành viên** review và duyệt trước khi merge.
@@ -63,37 +62,30 @@ Sau đó mở trình duyệt tại địa chỉ hiển thị trong terminal (th�
 **Không commit trực tiếp vào `main`.**
 
 ## Quy ước đặt tên nhánh
-
 - `feat/...`: chức năng mới
 - `fix/...`: sửa lỗi
 - `docs/...`: tài liệu
 - `refactor/...`: tái cấu trúc code
 
 ## Quy ước commit
-
-Dùng dạng `loại: mô tả ngắn`:
-
-- `feat: thêm chức năng đăng nhập`
-- `fix: sửa lỗi hiển thị giỏ hàng`
-- `docs: cập nhật README`
-- `style:`, `refactor:`, `chore:`
+Dùng dạng `loại: mô tả ngắn` theo chuẩn Conventional Commits:
+- `feat: thêm chức năng`
+- `fix: sửa lỗi phát sinh`
+- `docs: cập nhật tài liệu`
 
 ## Quy ước code
-
 - Đặt tên biến, hàm rõ nghĩa, nhất quán.
 - Không đưa file nhạy cảm (`.env`, mật khẩu, khóa JWT, thông tin Nodemailer) lên GitHub.
-- Không commit thư mục `node_modules/`.
+- Không commit thư mục `node_modules/` và `database.sqlite`.
 - Mỗi Pull Request chỉ nên làm một việc.
 
 ## Báo lỗi và đề xuất
-
 Tạo **Issue** mới trên GitHub, ghi rõ:
 - Các bước tái hiện lỗi
 - Kết quả mong đợi và kết quả thực tế
 - Ảnh chụp màn hình (nếu có)
 
 ## Quy tắc ứng xử
-
 Tôn trọng, lịch sự và hỗ trợ lẫn nhau trong nhóm eheh.
 
 ---
@@ -137,6 +129,46 @@ npx jest tests/security.test.js tests/sessions.test.js
 ```
 *(Kết quả: 19/19 tests pass 100%)*
 
+---
+
+## 📝 CHI TIẾT PHÂN HỆ BÀI VIẾT BLOG & BÌNH LUẬN (Contributor 2 - Nguyễn Như Hồng Hạnh)
+
+Phân hệ Tạp chí Thời trang, Quản trị bài viết Blog, Thả tim và Hệ thống bình luận cộng đồng do **Nguyễn Như Hồng Hạnh** (`hanhnguyen230505-code` - Blog & Content Reviewer) đảm nhiệm toàn diện:
+
+### 1. Các file đóng góp chính:
+- **Backend Posts API:** `server/routes/posts.js` (Xử lý toàn bộ logic CRUD bài viết tin tức xu hướng, phân trang, bộ lọc danh mục, tìm kiếm theo từ khóa, tạo slug tiếng Việt tự động, upload ảnh bìa qua Multer, tự động đếm lượt xem và API Thả tim bài viết).
+- **Backend Comments API:** `server/routes/comments.js` (Xử lý thêm bình luận mới, hiển thị danh sách bình luận theo từng bài viết và xóa bình luận vi phạm).
+- **Unit Tests:** `tests/posts.test.js` & `tests/comments.test.js` (Bộ 19 bài kiểm thử tự động độc lập đạt PASS 100%).
+- **Frontend Logic & Stylesheet:** `public/js/blog.js` và `public/css/blog.css` (Giao diện tạp chí thời trang hiện đại dạng lưới thẻ card, modal chi tiết bài viết, nút thả tim tương tác động và khung gửi bình luận).
+
+### 2. Các tính năng nổi bật:
+- **Không gian Xu hướng & Phong cách Thời trang:** Cung cấp các bài viết chuyên sâu về phối đồ (Mix & Match), xu hướng thời trang theo mùa và cẩm nang phong cách.
+- **Tìm kiếm & Phân loại thông minh:** Cho phép tìm kiếm bài viết tức thì theo từ khóa, lọc theo danh mục (`Xu hướng`, `Phối đồ`, `Tin tức`, `Bộ sưu tập`).
+- **Tương tác Thả tim (Like Post) & Bình luận:** Độc giả có thể nhấn biểu tượng trái tim để thể hiện sự yêu thích bài viết và đăng nhập để gửi bình luận đóng góp ý kiến.
+- **Chuẩn hóa SEO & Tối ưu hình ảnh:** Hệ thống tự động chuyển tiêu đề bài viết thành slug URL thân thiện chuẩn SEO; ảnh bìa được khuyến nghị tỉ lệ chuẩn 16:9 với dung lượng dưới 2MB.
+- **Tiêu chuẩn bình luận văn minh:** Tuân thủ bộ quy tắc ứng xử quốc tế Contributor Covenant v2.1 (`CODE_OF_CONDUCT.md`), nghiêm cấm mọi ngôn từ khiêu khích hoặc spam quảng cáo.
+
+### 3. Danh sách RESTful API Blog & Bình luận:
+
+| Phương thức | Đường dẫn API | Chức năng chi tiết | Quyền hạn |
+| :---: | :--- | :--- | :---: |
+| **GET** | `/api/posts` | Lấy danh sách bài viết (hỗ trợ phân trang, tìm kiếm `q`, lọc `category`) | Công khai (Tất cả) |
+| **GET** | `/api/posts/:id` | Xem chi tiết bài viết và tự động tăng 1 lượt xem | Công khai (Tất cả) |
+| **POST** | `/api/posts` | Đăng bài viết mới (hỗ trợ upload ảnh bìa Multer) | Đã đăng nhập (Tác giả/Admin) |
+| **PUT** | `/api/posts/:id` | Chỉnh sửa nội dung và thông tin bài viết | Tác giả hoặc Admin |
+| **POST** | `/api/posts/:id/like` | Thả tim / Tăng số lượt thích cho bài viết | Công khai (Tất cả) |
+| **DELETE**| `/api/posts/:id` | Xóa bài viết khỏi hệ thống | Tác giả hoặc Admin |
+| **GET** | `/api/comments/post/:postId` | Lấy toàn bộ danh sách bình luận của bài viết | Công khai (Tất cả) |
+| **POST** | `/api/comments` | Gửi bình luận nhận xét bài viết mới | Đã đăng nhập (User/Admin) |
+| **DELETE**| `/api/comments/:id` | Xóa bình luận bài viết | Người viết hoặc Admin |
+
+### 4. Lệnh kiểm thử tự động phân hệ Blog & Bình luận:
+```bash
+npx jest tests/posts.test.js tests/comments.test.js
+```
+*(Kết quả: 19/19 tests pass 100%)*
+
+---
 
 ## 👗 CHI TIẾT PHÂN HỆ CỬA HÀNG & QUẢN LÝ SẢN PHẨM (Contributor 4 - Nguyễn Nữ Hồng Nhung)
 
