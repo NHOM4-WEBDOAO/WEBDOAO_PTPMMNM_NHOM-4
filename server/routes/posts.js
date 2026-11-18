@@ -1,9 +1,22 @@
-
 const express = require('express');
 const router = express.Router();
 const { query } = require('../config/db');
 const { verifyToken, optionalAuth } = require('../middleware/auth');
 const upload = require('../middleware/upload');
+
+// Đảm bảo bảng posts có cột likes (Tự động khởi tạo nếu chưa có)
+async function ensureLikesColumn() {
+  try {
+    const cols = await query.all(`PRAGMA table_info(posts)`);
+    const hasLikes = cols && cols.some(c => c.name === 'likes');
+    if (!hasLikes) {
+      await query.run(`ALTER TABLE posts ADD COLUMN likes INTEGER DEFAULT 0`);
+    }
+  } catch (err) {
+    // Bỏ qua nếu cột đã tồn tại
+  }
+}
+ensureLikesColumn();
 
 // Helper to convert title to slug
 function slugify(text) {
@@ -227,6 +240,34 @@ router.put('/:id', verifyToken, upload.single('thumbnailFile'), async (req, res)
 });
 
 /**
+ * POST /api/posts/:id/like
+ * Thả tim / Tăng lượt thích bài viết (Nguyễn Như Hồng Hạnh - hanhnguyen230505-code)
+ */
+router.post('/:id/like', async (req, res) => {
+  try {
+    await ensureLikesColumn();
+    const { id } = req.params;
+
+    const post = await query.get('SELECT id, likes FROM posts WHERE id = ? OR slug = ?', [id, id]);
+    if (!post) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy bài viết.' });
+    }
+
+    const newLikes = (post.likes || 0) + 1;
+    await query.run('UPDATE posts SET likes = ? WHERE id = ?', [newLikes, post.id]);
+
+    res.json({
+      success: true,
+      message: 'Thả tim bài viết thành công!',
+      likes: newLikes
+    });
+  } catch (error) {
+    console.error('Lỗi thả tim bài viết:', error);
+    res.status(500).json({ success: false, message: 'Lỗi máy chủ khi thả tim bài viết.' });
+  }
+});
+
+/**
  * DELETE /api/posts/:id
  * Xóa thông tin bài viết (Tác giả hoặc Admin)
  */
@@ -257,4 +298,3 @@ router.delete('/:id', verifyToken, async (req, res) => {
 });
 
 module.exports = router;
-
