@@ -1,247 +1,175 @@
-# AURA FASHION - WEBSITE BÁN QUẦN ÁO THỜI TRANG TRỰC TUYẾN
-### Đề tài môn học: Phát triển phần mềm mã nguồn mở (PTPMMNM) - Nhóm 4
+# 🛍️ AURA FASHION - HỆ THỐNG THƯƠNG MẠI ĐIỆN TỬ THỜI TRANG MÃ NGUỒN MỞ
+
+> **Đề tài môn học:** Phát triển Phần mềm Mã Nguồn Mở (PTPMMNM)  
+> **Đơn vị thực hiện:** Nhóm 4  
+> **Kho lưu trữ chính (Upstream):** [NHOM4-WEBDOAO/WEBDOAO_PTPMMNM_NHOM-4](https://github.com/NHOM4-WEBDOAO/WEBDOAO_PTPMMNM_NHOM-4)
 
 ---
-THÀNH VIÊN: .
-PHAN TẤN KIỆT .
-NGUYỄN NỮ HỒNG NHUNG .
-NGUYỄN NHƯ HỒNG HẠNH .
-DƯƠNG QUỐC BẢO .
-NGUYỄN THẾ NHẤT
- PHÂN CHIA VAI TRÒ 1 Admin (Owner / Administrator / Quản trị viên): NGUYỄN NỮ HỒNG NHUNG 2 Maintain (Maintainer / Người duy trì): PHAN TẤN KIỆT 3 Write (Contributor / Developer / Người ghi):NGUYỄN THẾ NHẤT 4 Triage (Manager / Người phân loại): DƯƠNG QUỐC BẢO 5 Read (Viewer / Người xem):NGUYỄN NHƯ HỒNG HẠNH
 
-##  Giới Thiệu
-Dự án **AURA FASHION** là hệ thống website thương mại điện tử chuyên ngành thời trang được xây dựng hoàn toàn bằng các công nghệ mã nguồn mở (Node.js, Express.js, SQLite, Vanilla CSS/JS, Nodemailer, JWT, bcryptjs).
+## 📌 BẢNG THÀNH VIÊN & PHÂN CHIA VAI TRÒ DỰ ÁN
 
-Hệ thống đáp ứng trọn vẹn và hoàn chỉnh tất cả các yêu cầu theo đề bài:
-1. **Đăng ký tài khoản:** Xác thực thông tin, mã hóa mật khẩu bằng bcrypt.
-2. **Gửi mail xác nhận:** Tích hợp Nodemailer tự động tạo mã OTP 6 số và gửi email HTML kích hoạt tài khoản.
-3. **Đăng nhập:** Cấp phát token bảo mật JWT, ghi nhớ phiên làm việc.
-4. **Quên mật khẩu & Tạo lại mật khẩu mới:** Gửi mã xác thực qua email, cho phép nhập OTP và tạo mật khẩu mới an toàn.
-5. **Quản lý bài viết thời trang (CRUD & Tìm kiếm):**
-   - Tạo bài viết mới (kèm ảnh bìa URL hoặc tải file ảnh).
-   - Xem danh sách và xem chi tiết bài viết (tự động đếm lượt xem).
-   - Tìm kiếm bài viết theo từ khóa theo thời gian thực và lọc theo chủ đề.
-   - Cập nhật bài viết (dành cho tác giả hoặc Admin).
-   - Xóa bài viết (có hộp thoại xác nhận).
-6. **Quản lý trang cá nhân & Cập nhật thông tin:**
-   - Cập nhật họ tên, số điện thoại, địa chỉ giao hàng.
-   - Tải lên ảnh đại diện (Avatar).
-   - Đổi mật khẩu tài khoản.
-   - Xem lịch sử đơn hàng đã mua.
-   - Quản lý các bài viết do mình đăng tải.
-7. **Thương mại điện tử & Quản trị (Admin):**
-   - Danh mục sản phẩm đa dạng (Áo, Quần, Blazer, Váy đầm, Phụ kiện).
-   - Lọc sản phẩm, sắp xếp giá, tìm kiếm sản phẩm.
-   - Xem chi tiết sản phẩm: chọn Size (S, M, L, XL), chọn Màu sắc, số lượng.
-   - Giỏ hàng trực quan, tính toán giá trị đơn hàng.
-   - Đặt hàng hỗ trợ phương thức COD hoặc Chuyển khoản QR ngân hàng (VietQR).
-   - Trang quản trị (Admin Dashboard) với thống kê doanh thu, đơn hàng, sản phẩm, bài viết và cập nhật trạng thái đơn hàng.
-8. **Giao diện hiện đại (Wow factor):** Hỗ trợ chuyển đổi giao diện Sáng / Tối (Light / Dark mode), responsive mượt mà trên máy tính và điện thoại.
+| STT | Họ và tên | GitHub Account | Vai trò môn học | Quyền hạn GitHub | Phân hệ phụ trách chính |
+|:---:|:---|:---|:---|:---:|:---|
+| **1** | **Phan Tấn Kiệt** *(Trưởng nhóm)* | [`@Kietphan2812`](https://github.com/Kietphan2812) | **Maintainer** | **Maintain** | Quản lý Hồ sơ (`/api/user`), Giỏ hàng & Điều phối Git Flow |
+| **2** | **Nguyễn Nữ Hồng Nhung** | [`@tho2050`](https://github.com/tho2050) | **Product Manager** | **Write** | Cửa hàng, Sản phẩm (`/api/products`) & Yêu thích (`/api/wishlist`) |
+| **3** | **Nguyễn Thế Nhất** | [`@thenhat7789-pixel`](https://github.com/thenhat7789-pixel) | **Security Officer** | **Write** | Xác thực JWT, Bảo mật 2FA (`/api/security`) & Quản lý phiên (`/api/sessions`) |
+| **4** | **Nguyễn Như Hồng Hạnh** | [`@hanhnguyen230505-code`](https://github.com/hanhnguyen230505-code) | **Content Reviewer** | **Write** | Tạp chí Blog (`/api/posts`), Thả tim Like Post & Bình luận (`/api/comments`) |
+| **5** | **Dương Quốc Bảo** | [`@KazueWB`](https://github.com/KazueWB) | **Orders & Admin Manager** | **Write** | Quy trình Đặt hàng (`/api/orders`), Mã giảm giá (`/api/coupons`) & Dashboard (`/api/stats`) |
 
 ---
+
+## 📖 GIỚI THIỆU TỔNG QUAN
+
+**AURA FASHION** là nền tảng website thương mại điện tử chuyên ngành thời trang cao cấp, được thiết kế và triển khai tuân thủ nghiêm ngặt các nguyên lý phát triển phần mềm mã nguồn mở:
+- **Kiến trúc tinh gọn, không phụ thuộc nặng:** Xây dựng trên nền Node.js & Express.js RESTful API, cơ sở dữ liệu SQLite chống SQL Injection hoàn toàn bằng Parameterized Queries.
+- **Frontend Single Page Application (SPA):** Giao diện Vanilla JavaScript hiện đại, tốc độ phản hồi nhanh, hỗ trợ Responsive toàn diện trên Desktop, Tablet và Mobile.
+- **Quy trình chuẩn DevSecOps:** Tích hợp kiểm thử tự động Jest & Supertest, rà soát lỗ hổng bảo mật GitHub CodeQL, Secret Scanning, Push Protection và quản lý phụ thuộc tự động qua Dependabot.
+
 ---
 
-##  CHI TIẾT PHÂN HỆ BLOG & BÀI VIẾT THỜI TRANG (Contributor 2 - Nguyễn Như Hồng Hạnh)
+## ✨ CÁC TÍNH NĂNG NỔI BẬT
 
-Phân hệ Quản lý tin tức và bài viết thời trang do **Nguyễn Như Hồng Hạnh** đảm nhiệm toàn diện từ Backend đến Frontend:
+### 1. Quản lý Định danh, Bảo mật & Xác thực 2 bước (2FA)
+- Đăng ký tài khoản, gửi email kích hoạt chứa mã OTP 6 số qua Nodemailer.
+- Mã hóa mật khẩu bảo mật cao bằng thư viện `bcryptjs` với salt rounds chuẩn.
+- Cấp phát Json Web Token (JWT) có chữ ký số bảo vệ toàn bộ các endpoint riêng tư.
+- **Xác thực 2 bước (2FA via Email OTP):** Bảo vệ tài khoản 2 lớp, yêu cầu mã OTP khi đăng nhập.
+- **Quản lý phiên & Giám sát thiết bị (Session Audit):** Ghi vết IP, User-Agent, phát hiện loại thiết bị và hỗ trợ đăng xuất từ xa khỏi các phiên lạ.
+- Đánh giá độ mạnh mật khẩu theo thời gian thực (Password Strength Checker).
 
-### 1. Các file đóng góp chính:
-- **Backend API:** `server/routes/posts.js` (Xử lý toàn bộ logic CRUD bài viết, tự động đếm lượt xem, tìm kiếm từ khóa và lọc chủ đề).
-- **Unit Tests:** `tests/posts.test.js` (14 bài kiểm thử tự động độc lập đạt PASS 100%).
-- **Frontend Logic:** `public/js/blog.js` (Hiển thị danh sách bài viết phân trang, tìm kiếm thời gian thực, xem chi tiết và modal soạn thảo).
-- **Frontend Stylesheet:** `public/css/blog.css` (Giao diện lưới bài viết 16:9, khung tìm kiếm, layout đọc bài chi tiết và avatar tác giả).
+### 2. Cửa hàng Thời trang & Quản lý Sản phẩm
+- Danh mục sản phẩm phong phú: Áo, Quần, Blazer, Váy đầm, Phụ kiện.
+- Bộ lọc đa tiêu chí: Lọc theo danh mục, khoảng giá (`minPrice`, `maxPrice`), tìm kiếm tức thì và sắp xếp giá tăng/giảm dần.
+- Modal chi tiết sản phẩm: Xem ảnh phóng to, mô tả chất liệu, bảng chọn Size (S, M, L, XL), chọn màu sắc và số lượng.
+- **Danh sách yêu thích (Wishlist):** Cho phép người dùng lưu lại các sản phẩm ưng ý chỉ với 1 click.
+- Quản trị viên (Admin) toàn quyền thêm mới (upload ảnh Multer), sửa giá bán, cập nhật tồn kho hoặc xóa sản phẩm.
 
-### 2. Các tính năng nổi bật:
-- **Lưới bài viết chuẩn tỷ lệ vàng 16:9:** Thiết kế card bài viết hiện đại, hiển thị ảnh bìa sắc nét, nhãn chủ đề và tóm tắt ngắn.
-- **Tìm kiếm theo thời gian thực:** Hỗ trợ tìm bài viết theo từ khóa trong tiêu đề và nội dung ngay khi gõ phím.
-- **Lọc theo chủ đề thời trang:** Lọc nhanh các bài viết theo xu hướng, phong cách phối đồ, chăm sóc trang phục...
-- **Trang đọc bài viết chi tiết:** Tự động tăng lượt xem (`views`), hiển thị thông tin tác giả, ngày đăng và danh sách các bài viết cùng chủ đề liên quan.
-- **Quản lý bài viết (CRUD):** Cho phép người dùng đăng nhập viết bài mới, tác giả hoặc Admin có quyền chỉnh sửa và xóa bài viết.
+### 3. Tạp chí Thời trang, Blog & Cộng đồng
+- Chuyên mục bài viết phong cách, xu hướng thời trang và cẩm nang phối đồ (Mix & Match).
+- Tự động tạo slug URL thân thiện với công cụ tìm kiếm (Chuẩn SEO).
+- **Tính năng tương tác động:** Thả tim bài viết (`POST /api/posts/:id/like`) và hệ thống bình luận cộng đồng.
+- Chuẩn hóa hình ảnh tỉ lệ vàng 16:9 và tuân thủ bộ quy tắc ứng xử cộng đồng văn minh **Contributor Covenant v2.1**.
 
-### 3. Danh sách RESTful API Blog:
+### 4. Giỏ hàng, Quy trình Đặt hàng & Mã giảm giá (Coupons)
+- Giỏ hàng động trực quan, lưu trữ linh hoạt, cập nhật số lượng tức thì.
+- Hỗ trợ cả khách mua vãng lai (Guest Checkout) và thành viên đăng nhập.
+- Áp dụng mã giảm giá voucher khuyến mãi (Coupon) trừ tiền trực tiếp vào hóa đơn.
+- Quản lý vòng đời đơn hàng: *Chờ xử lý (Pending) ➔ Đang vận chuyển (Shipping) ➔ Hoàn thành (Delivered) ➔ Đã hủy (Cancelled)*.
+- Cho phép khách hàng chủ động hủy đơn khi đơn hàng còn ở trạng thái `pending`.
 
-| Phương thức | Đường dẫn API | Chức năng chi tiết | Quyền hạn |
-| :---: | :--- | :--- | :---: |
-| **GET** | `/api/posts` | Lấy danh sách bài viết (hỗ trợ phân trang, tìm kiếm từ khóa `q`, lọc theo `category`) | Công khai (Tất cả) |
-| **GET** | `/api/posts/:id` | Xem chi tiết bài viết theo ID và tự động tăng 1 lượt xem | Công khai (Tất cả) |
-| **POST** | `/api/posts` | Tạo bài viết thời trang mới (hỗ trợ tải file ảnh bìa) | Đăng nhập (User/Admin) |
-| **PUT** | `/api/posts/:id` | Chỉnh sửa và cập nhật bài viết | Chính tác giả hoặc Admin |
-| **DELETE**| `/api/posts/:id` | Xóa bài viết khỏi hệ thống | Chính tác giả hoặc Admin |
+### 5. Bảng điều khiển Quản trị (Admin Analytics Dashboard)
+- Thống kê trực quan thời gian thực: Tổng doanh thu, số lượng đơn hàng, số lượng thành viên và tồn kho sản phẩm.
+- Quản lý danh sách đơn hàng, xem chi tiết từng món hàng và cập nhật trạng thái vận chuyển.
 
-### 4. Lệnh kiểm thử tự động phân hệ Blog:
+---
+
+## 🚀 HƯỚNG DẪN CÀI ĐẶT & KHỞI CHẠY HỆ THỐNG
+
+### 1. Yêu cầu môi trường
+- **Node.js:** Phiên bản `>= 18.0.0` (LTS khuyến nghị).
+- **Git:** Đã cài đặt trên máy tính.
+
+### 2. Cài đặt các bước
 ```bash
-npx jest tests/posts.test.js
-```
-*(Kết quả: 14/14 tests pass 100%)*
-## 🚀 Hướng Dẫn Cài Đặt & Chạy Ứng Dụng
+# 1. Sao chép kho mã nguồn về máy
+git clone https://github.com/NHOM4-WEBDOAO/WEBDOAO_PTPMMNM_NHOM-4.git
+cd WEBDOAO_PTPMMNM_NHOM-4
 
-### 1. Yêu cầu hệ thống
-- Đã cài đặt **Node.js** (phiên bản 18 trở lên).
+# 2. Cài đặt các gói thư viện phụ thuộc
+npm install
 
-### 2. Khởi chạy hệ thống
-Tại thư mục dự án `c:\Users\DELL\Desktop\WEBDOAO_PTPMMNM_NHOM 4`, chạy câu lệnh:
-```bash
+# 3. Khởi chạy máy chủ phát triển
 npm start
 ```
-*(Hoặc `npm run dev`)*
 
-### 3. Truy cập website
-Mở trình duyệt web và truy cập vào địa chỉ:
+### 3. Truy cập ứng dụng
+Mở trình duyệt web và truy cập vào đường dẫn:  
 👉 **http://localhost:5000**
 
 ---
 
-## 👤 Tài Khoản Thử Nghiệm
+## 👤 TÀI KHOẢN THỬ NGHIỆM HỆ THỐNG
 
-Hệ thống đã nạp sẵn dữ liệu mẫu cùng 2 tài khoản thử nghiệm:
+Hệ thống đã nạp sẵn cơ sở dữ liệu mẫu cùng 2 tài khoản thử nghiệm với đầy đủ quyền hạn:
 
-| Loại tài khoản | Email | Mật khẩu | Quyền hạn |
-| :--- | :--- | :--- | :--- |
-| **Quản trị viên (Admin)** | `admin@fashionhub.vn` | `Admin@123` | Quản trị toàn hệ thống, xem thống kê, quản lý sản phẩm, bài viết & đơn hàng |
-| **Khách hàng (User)** | `khachhang@fashionhub.vn` | `User@123` | Mua sắm, quản lý trang cá nhân, viết bài thời trang |
+| Phân loại | Địa chỉ Email | Mật khẩu mặc định | Vai trò & Quyền hạn |
+|:---|:---|:---:|:---|
+| **Quản trị viên (Admin)** | `admin@fashionhub.vn` | `Admin@123` | Quản trị toàn hệ thống, xem bảng thống kê doanh thu, duyệt đơn hàng, quản lý sản phẩm |
+| **Khách hàng (User)** | `khachhang@fashionhub.vn` | `User@123` | Trải nghiệm mua sắm, yêu thích sản phẩm, đặt hàng, quản lý hồ sơ và viết bài blog |
 
-*(💡 Tại hộp thoại Đăng Nhập, có sẵn các nút bấm chọn nhanh tài khoản thử nghiệm giúp đăng nhập tức thì mà không cần gõ phím).*
-
----
-
+> 💡 **Mẹo đăng nhập nhanh:** Tại giao diện Đăng Nhập, hệ thống đã bố trí sẵn các nút bấm chọn nhanh tài khoản thử nghiệm giúp đăng nhập tức thì mà không cần gõ phím thủ công.
 
 ---
 
-## 👤 CHI TIẾT PHÂN HỆ HỒ SƠ NGƯỜI DÙNG & LỊCH SỬ ĐƠN HÀNG (Trưởng nhóm - Phan Tấn Kiệt)
+## 🧪 KẾT QUẢ KIỂM THỬ TỰ ĐỘNG (UNIT TESTING)
 
-Phân hệ Quản lý hồ sơ người dùng và lịch sử mua sắm do **Phan Tấn Kiệt (Trưởng nhóm / Maintainer)** đảm nhiệm toàn diện từ Backend, Kiểm thử tự động đến Giao diện Frontend:
+Hệ thống được bao phủ kiểm thử tự động toàn diện bằng **Jest** và **Supertest**, đảm bảo 100% các Test Suites vượt qua kiểm thử:
 
-### 1. Các file đóng góp chính:
-- **Backend API:** `server/routes/user.js` (Xử lý các API lấy hồ sơ cá nhân, cập nhật họ tên/SĐT/địa chỉ nhận hàng, đổi avatar và truy xuất lịch sử đơn hàng của người dùng).
-- **Unit Tests:** `tests/user.test.js` (4 bài kiểm thử bảo mật & nghiệp vụ tự động đạt PASS 100%).
-- **Frontend Logic:** `public/js/profile.js` (Hiển thị hồ sơ, xử lý form cập nhật thông tin và render danh sách đơn hàng đã mua).
-- **Frontend Stylesheet:** `public/css/profile.css` (Giao diện Profile dạng lưới 2 cột hiện đại: sidebar avatar & điều hướng bên trái, panel chi tiết & danh sách đơn hàng bên phải).
+```bash
+# Chạy toàn bộ các bộ bài kiểm thử tự động
+npm test
 
-### 2. Các tính năng nổi bật:
-- **Bảo mật truy cập thông tin:** Chỉ người dùng đã đăng nhập với token JWT hợp lệ mới có quyền truy cập và chỉnh sửa hồ sơ.
-- **Quản lý thông tin nhận hàng:** Cho phép người dùng linh hoạt cập nhật số điện thoại và địa chỉ giao hàng phục vụ đặt đơn nhanh chóng.
-- **Cập nhật ảnh đại diện (Avatar):** Tích hợp tải ảnh trực tiếp, cập nhật ngay lập tức trên hệ thống.
-- **Theo dõi lịch sử đơn hàng cá nhân:** Hiển thị chi tiết từng đơn hàng đã đặt gồm mã đơn, ngày mua, trạng thái xử lý và tổng tiền.
-- **Kiểm thử tự động toàn diện:** 100% test case độc lập bảo đảm API hoạt động ổn định và chính xác trên môi trường CI/CD.
-
----
----
-
-## 🛒 CHI TIẾT PHÂN HỆ GIỎ HÀNG, ĐẶT HÀNG & QUẢN TRỊ ADMIN (Contributor 3 - Dương Quốc Bảo)
-
-Phân hệ Giỏ hàng, Quy trình Đặt hàng và Bảng điều khiển Quản trị hệ thống (Admin Portal) do **Dương Quốc Bảo (Contributor 3 / Triage Manager)** đảm nhiệm toàn diện:
-
-### 1. Các file đóng góp chính:
-- **Backend API Đơn hàng:** `server/routes/orders.js` (Xử lý quy trình tạo đơn hàng mới, tính toán tiền hàng, lưu chi tiết giỏ hàng và cập nhật trạng thái đơn).
-- **Backend API Thống kê:** `server/routes/stats.js` (Tổng hợp số liệu doanh thu, số đơn, sản phẩm, bài viết và khách hàng phục vụ Dashboard).
-- **Unit Tests Đơn hàng & Thống kê:** `tests/orders.test.js` (9 test case) và `tests/stats.test.js` (2 test case) đạt chuẩn PASS 100%.
-- **Frontend Logic Admin:** `public/js/admin.js` (Hiển thị số liệu thống kê thời gian thực, quản lý và duyệt trạng thái đơn hàng, điều khiển danh mục sản phẩm).
-- **Frontend Stylesheet Admin:** `public/css/admin.css` (Giao diện bảng điều khiển thẻ thống kê đa màu sắc, bảng quản lý đơn hàng chuẩn UX/UI responsive).
-
-### 2. Các tính năng nổi bật:
-- **Giỏ hàng & Đặt hàng linh hoạt:** Hỗ trợ lưu giỏ hàng, đặt hàng vãng lai (Guest Checkout) hoặc lưu vết lịch sử theo tài khoản người dùng đăng nhập.
-- **Thống kê Dashboard trực quan:** Hiển thị tức thì tổng doanh thu thực tế, tổng số đơn hàng đã đặt, số lượng sản phẩm và người dùng đang hoạt động.
-- **Quản lý vòng đời đơn hàng:** Cho phép Quản trị viên theo dõi và cập nhật trạng thái xử lý đơn hàng theo 5 giai đoạn: *Chờ xử lý ➔ Đang đóng gói ➔ Đang giao ➔ Đã giao ➔ Đã hủy*.
-- **Phân quyền bảo mật:** Sử dụng middleware `requireAdmin` chặn đứng truy cập trái phép của người dùng thông thường vào số liệu tài chính và quản trị.
-- **Kiểm thử tự động vững chắc:** Bao phủ 100% các kịch bản ngoại lệ giỏ hàng rỗng, thiếu thông tin giao hàng và phân quyền Admin.
-
----
----
-
-## 🔐 CHI TIẾT PHÂN HỆ XÁC THỰC, BẢO MẬT & XÁC THỰC 2 BƯỚC 2FA (Contributor 1 - Nguyễn Thế Nhất)
-
-Phân hệ Quản lý tài khoản, Xác thực người dùng và Hệ thống bảo mật 2FA do **Nguyễn Thế Nhất (Contributor 1 / Write Developer)** đảm nhiệm toàn diện:
-
-- **Backend API Phiên đăng nhập:** `server/routes/sessions.js` (Ghi nhận địa chỉ IP, loại thiết bị Desktop/Mobile, thu hồi phiên và đăng xuất từ xa).
-
-### 1. Các file đóng góp chính:
-- **Backend API Xác thực:** `server/routes/auth.js` (Đăng ký tài khoản, đăng nhập JWT, gửi mã OTP xác nhận tài khoản, quên/đặt lại mật khẩu).
-- **Backend API Bảo mật & 2FA:** `server/routes/security.js` (Kiểm tra độ mạnh mật khẩu chuẩn NIST, kích hoạt & xác thực 2 bước 2FA qua OTP).
-- **Middleware Phân quyền & Bảo vệ:** `server/middleware/auth.js` (Xác thực Bearer token, phân quyền Quản trị viên requireAdmin).
-- **Dịch vụ Email Tự động:** `server/config/mailer.js` (Tích hợp Nodemailer gửi OTP bảo mật dạng email HTML chuẩn thương mại điện tử).
-- **Unit Tests Bảo mật & Xác thực:** `tests/auth.test.js`, `tests/middleware.test.js`, `tests/security.test.js` (Pass 100% tất cả các ca kiểm thử).
-- **Frontend Logic & Giao diện:** `public/js/auth.js` và `public/css/auth.css` (Giao diện Modal đăng nhập, đăng ký, xác thực OTP mượt mà).
-
-### 2. Các tính năng nổi bật:
-- **Đăng ký & Kích hoạt qua OTP:** Tự động tạo mã OTP 6 chữ số ngẫu nhiên có thời hạn, gửi email kích hoạt và mã hóa mật khẩu người dùng bằng bcrypt (salt 10 vòng).
-- **Xác thực 2 bước (Two-Factor Authentication - 2FA):** Tăng cường bảo mật cấp cao cho tài khoản người dùng bằng mã OTP 2 lớp khi thực hiện các tác vụ nhạy cảm hoặc đăng nhập.
-- **Kiểm tra độ an toàn mật khẩu (Password Strength Checker):** Phân tích thời gian thực cấu trúc mật khẩu, phát hiện các mật khẩu yếu phổ biến và đưa ra khuyến nghị an toàn theo thang điểm.
-- **Cơ chế Token an toàn:** Cấp phát Json Web Token (JWT) có chữ ký số bí mật, hỗ trợ truyền qua Authorization Header hoặc Query Parameter phục vụ linh hoạt cho ứng dụng.
-- **Bao phủ kiểm thử vững chắc:** Hơn 35 bài kiểm thử chuyên sâu bảo đảm 0 lỗ hổng xác thực, bắt lỗi đầu vào và phòng thủ truy cập trái phép.
-
-### 3. Danh sách RESTful API Bảo mật & 2FA:
-| Phương thức | Đường dẫn API | Chức năng chi tiết | Quyền hạn |
-| :---: | :--- | :--- | :---: |
-| **POST** | `/api/security/check-password-strength` | Đánh giá độ an toàn mật khẩu, phát hiện mật khẩu yếu, đưa ra gợi ý | Công khai |
-| **GET** | `/api/security/status` | Lấy trạng thái kích hoạt 2FA và điểm số bảo mật tài khoản | Đăng nhập |
-| **POST** | `/api/security/2fa/request-otp` | Tạo mã OTP kích hoạt xác thực 2 bước gửi về email người dùng | Đăng nhập |
-| **POST** | `/api/security/2fa/enable` | Xác nhận mã OTP để chính thức kích hoạt bảo vệ 2FA | Đăng nhập |
-| **POST** | `/api/security/2fa/disable` | Hủy xác thực 2 bước (yêu cầu mật khẩu tài khoản để xác nhận) | Đăng nhập |
-| **POST** | `/api/security/2fa/verify-login` | Xác thực OTP 2FA trong quá trình đăng nhập để cấp JWT Token | Công khai |
-| **GET** | `/api/sessions` | Lấy danh sách các phiên đăng nhập của người dùng | Đăng nhập |
-| **POST** | `/api/sessions/record` | Ghi nhận phiên đăng nhập và thiết bị truy cập mới | Đăng nhập |
-| **DELETE** | `/api/sessions/:id` | Thu hồi / Đăng xuất một phiên làm việc cụ thể | Đăng nhập |
-| **POST** | `/api/sessions/revoke-all` | Đăng xuất tài khoản khỏi tất cả các thiết bị khác | Đăng nhập |
-| **GET** | `/api/sessions/active-count` | Đếm số lượng phiên làm việc đang hoạt động | Đăng nhập |
----
----
-
-## 📁 Cấu Trúc Thư Mục Dự Án
-
+# Chạy kiểm thử kèm bảng thống kê độ bao phủ mã nguồn (Code Coverage)
+npm test -- --coverage
 ```
-WEBDOAO_PTPMMNM_NHOM 4/
+
+### Kết quả kiểm định chất lượng:
+- **Test Suites:** `13 passed, 13 total` (100% Pass)
+- **Test Cases:** `107 passed, 107 total` (100% Pass)
+- **Độ bao phủ hàm (Functions):** `80.00%`
+- **Độ bao phủ dòng lệnh (Lines):** `71.64%`
+
+---
+
+## 📂 CẤU TRÚC THƯ MỤC MÃ NGUỒN
+
+```text
+WEBDOAO_PTPMMNM_NHOM-4/
 ├── server/
 │   ├── config/
-│   │   ├── db.js                # Kết nối SQLite, tự động tạo bảng & nạp dữ liệu mẫu
-│   │   └── mailer.js            # Cấu hình Nodemailer gửi email OTP & kích hoạt
+│   │   ├── db.js                # Kết nối SQLite, khởi tạo cấu trúc bảng & nạp dữ liệu mẫu
+│   │   └── mailer.js            # Dịch vụ Nodemailer gửi mã OTP kích hoạt & bảo mật 2FA
 │   ├── middleware/
-│   │   ├── auth.js              # Middleware xác thực JWT & phân quyền Admin
-│   │   └── upload.js            # Middleware Multer upload ảnh đại diện và bài viết
+│   │   ├── auth.js              # Middleware xác thực JWT token, phân quyền Admin (requireAdmin)
+│   │   └── upload.js            # Middleware Multer kiểm soát upload ảnh đại diện & sản phẩm
 │   └── routes/
-│       ├── auth.js              # API: Đăng ký, đăng nhập, xác nhận email, quên/đặt lại pass
-│       ├── user.js              # API: Trang cá nhân, cập nhật thông tin, avatar, đổi pass
-│       ├── posts.js             # API: CRUD bài viết, tìm kiếm bài viết, đếm view
-│       ├── products.js          # API: Danh sách sản phẩm, bộ lọc, chi tiết, CRUD sản phẩm
-│       ├── orders.js            # API: Đặt hàng, đơn hàng cá nhân, quản trị đơn hàng
-│       ├── stats.js             # API: Thống kê doanh thu, đơn hàng cho Admin
-│       ├── security.js          # API: Xác thực 2 bước 2FA & kiểm tra độ mạnh mật khẩu
-│       ├── coupons.js           # API: Mã giảm giá voucher & khuyến mãi
-│       └── comments.js          # API: Bình luận bài viết blog thời trang
+│       ├── auth.js              # API Đăng ký, đăng nhập JWT, kích hoạt OTP, quên mật khẩu
+│       ├── security.js          # API Bảo mật 2FA, OTP Email, kiểm tra độ mạnh mật khẩu
+│       ├── sessions.js          # API Quản lý phiên làm việc, audit log thiết bị, đăng xuất từ xa
+│       ├── user.js              # API Hồ sơ cá nhân, cập nhật thông tin, lịch sử mua sắm
+│       ├── products.js          # API Quản lý sản phẩm, danh mục, bộ lọc giá và tìm kiếm
+│       ├── wishlist.js          # API Quản lý danh sách sản phẩm yêu thích của người dùng
+│       ├── orders.js            # API Đặt hàng, chi tiết đơn, hủy đơn và cập nhật trạng thái
+│       ├── coupons.js           # API Áp dụng mã giảm giá voucher khuyến mãi
+│       ├── stats.js             # API Thống kê tổng hợp số liệu doanh thu cho Admin
+│       ├── posts.js             # API Quản trị bài viết blog, đếm view, thả tim bài viết
+│       └── comments.js          # API Bình luận và phản hồi bài viết cộng đồng
 ├── public/
-│   ├── css/
-│   │   ├── style.css            # Hệ thống Design System, typography, header, modal, toast
-│   │   ├── shop.css             # Banner hero, danh mục, lưới sản phẩm, giỏ hàng, checkout
-│   │   ├── blog.css             # Giao diện bài viết thời trang, tìm kiếm, đọc bài, tạo bài
-│   │   ├── auth.css             # Giao diện đăng nhập, đăng ký, OTP xác thực email
-│   │   ├── profile.css          # Giao diện quản lý trang cá nhân, avatar, đơn hàng
-│   │   └── admin.css            # Giao diện quản trị, thống kê số liệu kinh doanh
-│   ├── js/
-│   │   ├── api.js               # Thư viện gọi API với JWT token tự động & thông báo toast
-│   │   ├── auth.js              # Xử lý nghiệp vụ đăng nhập, đăng ký, kích hoạt email, quên mật khẩu
-│   │   ├── shop.js              # Xử lý duyệt sản phẩm, lọc danh mục, giỏ hàng, đặt hàng
-│   │   ├── blog.js              # Xử lý CRUD bài viết thời trang, tìm kiếm, xem chi tiết
-│   │   ├── profile.js           # Xử lý cập nhật thông tin cá nhân, avatar, đổi mật khẩu
-│   │   ├── admin.js             # Xử lý bảng điều khiển quản trị, cập nhật trạng thái đơn
-│   │   └── app.js               # Điều hướng SPA (Hash router), quản lý modal, Dark/Light mode
-│   ├── uploads/                 # Thư mục lưu trữ hình ảnh upload
-│   └── index.html               # Trang ứng dụng Single Page Application chính
-├── docs/
-│   ├── BAO_CAO_PHAN_TICH_THIET_KE_HE_THONG.md    # Báo cáo chi tiết phân tích thiết kế hệ thống
-│   └── BAO_CAO_PHAN_TICH_THIET_KE_HE_THONG.html  # Bản HTML chuẩn in ấn / xuất PDF báo cáo
+│   ├── css/                     # Toàn bộ mã nguồn giao diện CSS responsive & Dark Mode
+│   ├── js/                      # Toàn bộ mã nguồn JavaScript SPA điều hướng & tương tác API
+│   ├── uploads/                 # Thư mục lưu trữ hình ảnh tải lên của hệ thống
+│   └── index.html               # Trang ứng dụng Single Page Application (SPA) chính
+├── tests/                       # Bộ 13 file kiểm thử tự động Jest & Supertest độc lập
+├── docs/                        # Tài liệu phân tích thiết kế hệ thống và báo cáo dự án
 ├── database.sqlite              # Cơ sở dữ liệu SQLite độc lập
-├── server.js                    # Tệp khởi chạy máy chủ Express
-├── package.json
-└── README.md
+├── server.js                    # Tệp tin khởi chạy máy chủ Node.js Express
+├── CONTRIBUTING.md              # Quy chuẩn đóng góp mã nguồn & đặc tả chi tiết 5 thành viên
+├── CODE_OF_CONDUCT.md          # Bộ quy tắc ứng xử cộng đồng Contributor Covenant v2.1
+├── SECURITY.md                  # Chính sách quản trị bảo mật thông tin & tiếp nhận lỗ hổng
+├── LICENSE                      # Giấy phép mã nguồn mở MIT License
+└── package.json                 # Quản lý phụ thuộc và kịch bản npm scripts
 ```
 
 ---
 
-## 📄 Tài Liệu Bàn Giao Kèm Theo
-1. **Mã nguồn hoàn chỉnh:** Toàn bộ source code của dự án chạy trực tiếp không cần cấu hình phức tạp.
-2. **Tài liệu phân tích & thiết kế hệ thống:**
-   - Xem định dạng Markdown: [BAO_CAO_PHAN_TICH_THIET_KE_HE_THONG.md](docs/BAO_CAO_PHAN_TICH_THIET_KE_HE_THONG.md)
-   - Xem định dạng HTML có thể mở trên trình duyệt hoặc in ra PDF: [BAO_CAO_PHAN_TICH_THIET_KE_HE_THONG.html](docs/BAO_CAO_PHAN_TICH_THIET_KE_HE_THONG.html)
+## 📜 CHÍNH SÁCH MÃ NGUỒN MỞ & TÀI LIỆU QUẢN TRỊ
+
+Dự án AURA FASHION được vận hành theo các tiêu chuẩn mã nguồn mở quốc tế:
+1. **Hướng dẫn đóng góp (Contributing Guidelines):** Xem chi tiết tại [CONTRIBUTING.md](CONTRIBUTING.md).
+2. **Quy tắc ứng xử cộng đồng (Code of Conduct):** Xem chi tiết tại [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+3. **Chính sách an toàn thông tin (Security Policy):** Xem chi tiết tại [SECURITY.md](SECURITY.md).
+4. **Bản quyền mã nguồn:** Được phát hành theo giấy phép mã nguồn mở tự do [MIT License](LICENSE).
 
 ---
-© 2026 - **Nhóm 4 - Phát triển phần mềm mã nguồn mở**.
+
+© 2026 - **Nhóm 4 | Môn Phát triển Phần mềm Mã Nguồn Mở (PTPMMNM)**. All rights reserved.
