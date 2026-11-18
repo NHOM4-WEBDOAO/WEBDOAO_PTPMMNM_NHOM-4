@@ -1,4 +1,4 @@
-# 🛍️ AURA FASHION - HỆ THỐNG THƯƠNG MẠI ĐIỆN TỬ THỜI TRANG MÃ NGUỒN MỞ
+#  AURA FASHION - HỆ THỐNG THƯƠNG MẠI ĐIỆN TỬ THỜI TRANG MÃ NGUỒN MỞ
 
 > **Đề tài môn học:** Phát triển Phần mềm Mã Nguồn Mở (PTPMMNM)  
 > **Đơn vị thực hiện:** Nhóm 4  
@@ -6,7 +6,7 @@
 
 ---
 
-## 📌 BẢNG THÀNH VIÊN & PHÂN CHIA VAI TRÒ DỰ ÁN
+##  BẢNG THÀNH VIÊN & PHÂN CHIA VAI TRÒ DỰ ÁN
 
 | STT | Họ và tên | GitHub Account | Vai trò môn học | Quyền hạn GitHub | Phân hệ phụ trách chính |
 |:---:|:---|:---|:---|:---:|:---|
@@ -18,7 +18,7 @@
 
 ---
 
-## 📖 GIỚI THIỆU TỔNG QUAN
+##  GIỚI THIỆU TỔNG QUAN
 
 **AURA FASHION** là nền tảng website thương mại điện tử chuyên ngành thời trang cao cấp, được thiết kế và triển khai tuân thủ nghiêm ngặt các nguyên lý phát triển phần mềm mã nguồn mở:
 - **Kiến trúc tinh gọn, không phụ thuộc nặng:** Xây dựng trên nền Node.js & Express.js RESTful API, cơ sở dữ liệu SQLite chống SQL Injection hoàn toàn bằng Parameterized Queries.
@@ -27,7 +27,7 @@
 
 ---
 
-## ✨ CÁC TÍNH NĂNG NỔI BẬT
+##  CÁC TÍNH NĂNG NỔI BẬT
 
 ### 1. Quản lý Định danh, Bảo mật & Xác thực 2 bước (2FA)
 - Đăng ký tài khoản, gửi email kích hoạt chứa mã OTP 6 số qua Nodemailer.
@@ -63,7 +63,7 @@
 
 ---
 
-## 🚀 HƯỚNG DẪN CÀI ĐẶT & KHỞI CHẠY HỆ THỐNG
+##  HƯỚNG DẪN CÀI ĐẶT & KHỞI CHẠY HỆ THỐNG
 
 ### 1. Yêu cầu môi trường
 - **Node.js:** Phiên bản `>= 18.0.0` (LTS khuyến nghị).
@@ -88,7 +88,7 @@ Mở trình duyệt web và truy cập vào đường dẫn:
 
 ---
 
-## 👤 TÀI KHOẢN THỬ NGHIỆM HỆ THỐNG
+##  TÀI KHOẢN THỬ NGHIỆM HỆ THỐNG
 
 Hệ thống đã nạp sẵn cơ sở dữ liệu mẫu cùng 2 tài khoản thử nghiệm với đầy đủ quyền hạn:
 
@@ -101,7 +101,7 @@ Hệ thống đã nạp sẵn cơ sở dữ liệu mẫu cùng 2 tài khoản th
 
 ---
 
-## 🧪 KẾT QUẢ KIỂM THỬ TỰ ĐỘNG (UNIT TESTING)
+##  KẾT QUẢ KIỂM THỬ TỰ ĐỘNG (UNIT TESTING)
 
 Hệ thống được bao phủ kiểm thử tự động toàn diện bằng **Jest** và **Supertest**, đảm bảo 100% các Test Suites vượt qua kiểm thử:
 
@@ -125,32 +125,66 @@ npm test -- --coverage
 
 ```text
 WEBDOAO_PTPMMNM_NHOM-4/
+├── .github/
+│   └── workflows/
+│       └── ci.yml               # Quy trình CI tự động chạy kiểm thử trên GitHub Actions mỗi khi mở PR
 ├── server/
 │   ├── config/
-│   │   ├── db.js                # Kết nối SQLite, khởi tạo cấu trúc bảng & nạp dữ liệu mẫu
+│   │   ├── db.js                # Kết nối SQLite, khởi tạo cấu trúc bảng & nạp dữ liệu mẫu ban đầu
 │   │   └── mailer.js            # Dịch vụ Nodemailer gửi mã OTP kích hoạt & bảo mật 2FA
 │   ├── middleware/
 │   │   ├── auth.js              # Middleware xác thực JWT token, phân quyền Admin (requireAdmin)
-│   │   └── upload.js            # Middleware Multer kiểm soát upload ảnh đại diện & sản phẩm
+│   │   └── upload.js            # Middleware Multer kiểm soát tải ảnh đại diện & ảnh sản phẩm
 │   └── routes/
-│       ├── auth.js              # API Đăng ký, đăng nhập JWT, kích hoạt OTP, quên mật khẩu
-│       ├── security.js          # API Bảo mật 2FA, OTP Email, kiểm tra độ mạnh mật khẩu
-│       ├── sessions.js          # API Quản lý phiên làm việc, audit log thiết bị, đăng xuất từ xa
+│       ├── auth.js              # API Đăng ký, đăng nhập JWT, kích hoạt OTP, quên & đặt lại mật khẩu
+│       ├── security.js          # API Bảo mật 2FA via OTP Email, kiểm tra độ mạnh mật khẩu chuẩn OWASP
+│       ├── sessions.js          # API Quản lý phiên truy cập, audit thiết bị, thu hồi phiên từ xa
 │       ├── user.js              # API Hồ sơ cá nhân, cập nhật thông tin, lịch sử mua sắm
-│       ├── products.js          # API Quản lý sản phẩm, danh mục, bộ lọc giá và tìm kiếm
-│       ├── wishlist.js          # API Quản lý danh sách sản phẩm yêu thích của người dùng
-│       ├── orders.js            # API Đặt hàng, chi tiết đơn, hủy đơn và cập nhật trạng thái
-│       ├── coupons.js           # API Áp dụng mã giảm giá voucher khuyến mãi
-│       ├── stats.js             # API Thống kê tổng hợp số liệu doanh thu cho Admin
-│       ├── posts.js             # API Quản trị bài viết blog, đếm view, thả tim bài viết
+│       ├── products.js          # API Quản lý danh mục, sản phẩm, bộ lọc giá và tìm kiếm
+│       ├── wishlist.js          # API Quản lý danh sách sản phẩm yêu thích (Wishlist)
+│       ├── orders.js            # API Quy trình đặt hàng, tra cứu chi tiết, hủy đơn & cập nhật trạng thái
+│       ├── coupons.js           # API Áp dụng mã giảm giá voucher khuyến mãi thời gian thực
+│       ├── stats.js             # API Thống kê tổng hợp số liệu doanh thu & đơn hàng cho Admin Dashboard
+│       ├── posts.js             # API Quản trị bài viết blog, đếm view, thả tim Like Post
 │       └── comments.js          # API Bình luận và phản hồi bài viết cộng đồng
 ├── public/
-│   ├── css/                     # Toàn bộ mã nguồn giao diện CSS responsive & Dark Mode
-│   ├── js/                      # Toàn bộ mã nguồn JavaScript SPA điều hướng & tương tác API
+│   ├── css/
+│   │   ├── style.css            # Hệ thống Design System, biến CSS, Typography, Header, Footer, Toast
+│   │   ├── shop.css             # Giao diện cửa hàng, danh mục sản phẩm, bộ lọc, modal xem chi tiết
+│   │   ├── blog.css             # Giao diện tạp chí thời trang, lưới bài viết 16:9, khung tìm kiếm
+│   │   ├── auth.css             # Giao diện modal đăng nhập, đăng ký, xác thực OTP 2FA
+│   │   ├── profile.css          # Giao diện trang cá nhân, đổi avatar, lịch sử mua hàng, danh sách thiết bị
+│   │   └── admin.css            # Giao diện bảng điều khiển quản trị, thống kê doanh thu, quản lý đơn
+│   ├── js/
+│   │   ├── api.js               # Thư viện tiện ích gọi fetch API, tự động đính kèm JWT Bearer token & Toast
+│   │   ├── app.js               # Điều hướng Hash Router cho SPA, quản lý Modal, chuyển đổi Light/Dark Mode
+│   │   ├── auth.js              # Xử lý form đăng nhập, đăng ký, xác minh OTP, quên mật khẩu
+│   │   ├── shop.js              # Hiển thị sản phẩm, lọc danh mục, giỏ hàng, đặt hàng, danh sách Wishlist
+│   │   ├── blog.js              # Hiển thị bài viết xu hướng, tìm kiếm thời gian thực, thả tim và bình luận
+│   │   ├── icons.js             # Bộ biểu tượng FontAwesome SVG nhúng tối ưu tốc độ tải trang
+│   │   ├── profile.js           # Cập nhật thông tin cá nhân, tải avatar, đổi mật khẩu, quản lý phiên
+│   │   └── admin.js             # Dashboard thống kê doanh thu, duyệt và cập nhật trạng thái đơn hàng
 │   ├── uploads/                 # Thư mục lưu trữ hình ảnh tải lên của hệ thống
 │   └── index.html               # Trang ứng dụng Single Page Application (SPA) chính
-├── tests/                       # Bộ 13 file kiểm thử tự động Jest & Supertest độc lập
+├── tests/                       # Trọn bộ 13 file kiểm thử tự động Jest & Supertest (107 tests PASS 100%)
+│   ├── auth.test.js             # 10 tests: Đăng ký, đăng nhập JWT, gửi OTP email, quên mật khẩu
+│   ├── security.test.js         # 12 tests: Bảo mật 2FA OTP, kiểm tra độ mạnh mật khẩu chuẩn NIST
+│   ├── sessions.test.js         # 7 tests: Quản lý phiên, audit thiết bị, đăng xuất thiết bị từ xa
+│   ├── middleware.test.js       # 10 tests: Xác thực Bearer token và phân quyền requireAdmin
+│   ├── user.test.js             # 4 tests: Hồ sơ cá nhân, đổi mật khẩu, xem lịch sử đơn hàng
+│   ├── products.test.js         # 8 tests: CRUD sản phẩm, danh mục, bộ lọc giá và tìm kiếm
+│   ├── wishlist.test.js         # 7 tests: Thêm, xóa và kiểm tra danh sách sản phẩm yêu thích
+│   ├── orders.test.js           # 8 tests: Đặt hàng, tính tiền giỏ hàng, cập nhật trạng thái đơn
+│   ├── coupons.test.js          # 6 tests: Áp dụng mã giảm giá phần trăm và số tiền cố định
+│   ├── stats.test.js            # 2 tests: API thống kê tổng doanh thu, đơn hàng cho Admin
+│   ├── posts.test.js            # 15 tests: CRUD bài viết, tìm kiếm từ khóa, đếm view, thả tim Like
+│   ├── comments.test.js         # 4 tests: Bình luận bài viết, xóa bình luận vi phạm
+│   └── health.test.js           # 2 tests: Trạng thái hoạt động máy chủ server health check
 ├── docs/                        # Tài liệu phân tích thiết kế hệ thống và báo cáo dự án
+│   ├── BAO_CAO_PHAN_TICH_THIET_KE_HE_THONG.md    # Tài liệu phân tích & thiết kế hệ thống chi tiết
+│   ├── BAO_CAO_PHAN_TICH_THIET_KE_HE_THONG.html  # Bản HTML chuẩn in ấn / xuất PDF báo cáo
+│   ├── PHAN_CONG_NHIEM_VU_5_THANH_VIEN.md        # Bảng phân công chi tiết 5 thành viên
+│   └── SO_TAY_DO_AN_NHOM_4.md                    # Sổ tay hướng dẫn phát triển và quy trình đồ án
 ├── database.sqlite              # Cơ sở dữ liệu SQLite độc lập
 ├── server.js                    # Tệp tin khởi chạy máy chủ Node.js Express
 ├── CONTRIBUTING.md              # Quy chuẩn đóng góp mã nguồn & đặc tả chi tiết 5 thành viên
