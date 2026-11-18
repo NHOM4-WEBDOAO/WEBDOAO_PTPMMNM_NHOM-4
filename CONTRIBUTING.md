@@ -98,6 +98,46 @@ Tôn trọng, lịch sự và hỗ trợ lẫn nhau trong nhóm eheh.
 
 ---
 
+## 🛡️ CHI TIẾT PHÂN HỆ BẢO MẬT & QUẢN LÝ PHIÊN (Contributor 1 - Nguyễn Thế Nhất)
+
+Phân hệ An toàn thông tin, Xác thực 2 bước (2FA via Email OTP) và Quản lý phiên truy cập (Session Audit) do **Nguyễn Thế Nhất** (Security & Auth Officer) đảm nhiệm toàn diện:
+
+### 1. Các file đóng góp chính:
+- **Backend Security API:** `server/routes/security.js` (Xử lý toàn bộ logic kiểm tra độ mạnh mật khẩu, cấp phát mã OTP 6 số qua email, kích hoạt và vô hiệu hóa bảo mật hai lớp 2FA).
+- **Backend Sessions API:** `server/routes/sessions.js` (Ghi nhận thông tin thiết bị, địa chỉ IP, User-Agent, truy vấn danh sách phiên hoạt động và thu hồi phiên làm việc từ xa).
+- **Email Service:** `server/config/mailer.js` (Tích hợp dịch vụ gửi email mã xác thực OTP bảo mật cao).
+- **Unit Tests:** `tests/security.test.js` & `tests/sessions.test.js` (Bộ 19 bài kiểm thử tự động độc lập đạt PASS 100%).
+- **Frontend Security UI:** `public/js/security.js`, `public/js/profile.js` và `public/css/profile.css` (Giao diện trung tâm tài khoản, bảng hiển thị phiên làm việc và modal nhập mã OTP).
+
+### 2. Các tính năng nổi bật:
+- **Xác thực 2 bước (Two-Factor Authentication - 2FA):** Tạo và gửi mã OTP 6 số ngẫu nhiên qua email có hiệu lực trong 5 phút. Khi người dùng bật 2FA, hệ thống yêu cầu xác minh OTP hợp lệ mới hoàn tất đăng nhập.
+- **Phân tích độ mạnh mật khẩu (Password Strength Checker):** Đánh giá mật khẩu theo 5 tiêu chí bảo mật (độ dài, chữ hoa, chữ thường, chữ số, ký tự đặc biệt) và lập tức cảnh báo nếu trùng với mật khẩu yếu phổ biến.
+- **Giám sát thiết bị & Phiên làm việc (Session Management & Audit):** Tự động phát hiện loại thiết bị (Desktop, Mobile), trình duyệt, hệ điều hành và địa chỉ IP của mỗi lần truy cập.
+- **Thu hồi phiên làm việc từ xa (Remote Revocation):** Cho phép người dùng chủ động đăng xuất khỏi một thiết bị lạ hoặc đăng xuất toàn bộ các phiên khác chỉ với 1 cú click.
+
+### 3. Danh sách RESTful API Bảo mật & Phiên (Security & Sessions):
+
+| Phương thức | Đường dẫn API | Chức năng chi tiết | Quyền hạn |
+| :---: | :--- | :--- | :---: |
+| **POST** | `/api/security/check-password-strength` | Phân tích độ an toàn và điểm bảo mật của mật khẩu | Công khai (Tất cả) |
+| **GET** | `/api/security/status` | Lấy trạng thái kích hoạt bảo mật 2FA của tài khoản | Đã đăng nhập (User/Admin) |
+| **POST** | `/api/security/2fa/request-otp` | Cấp phát và gửi mã OTP 6 số xác thực về Email | Đã đăng nhập (User/Admin) |
+| **POST** | `/api/security/2fa/enable` | Xác minh OTP và chính thức kích hoạt bảo mật 2 bước | Đã đăng nhập (User/Admin) |
+| **POST** | `/api/security/2fa/disable` | Hủy kích hoạt bảo mật 2 bước theo yêu cầu | Đã đăng nhập (User/Admin) |
+| **POST** | `/api/security/2fa/verify-login` | Xác thực bước hai khi đăng nhập tài khoản có bật 2FA | Công khai (Tất cả) |
+| **GET** | `/api/sessions` | Lấy danh sách toàn bộ các phiên và thiết bị đang hoạt động | Đã đăng nhập (User/Admin) |
+| **POST** | `/api/sessions/record` | Ghi nhận phiên đăng nhập mới kèm IP và thiết bị | Đã đăng nhập (User/Admin) |
+| **DELETE**| `/api/sessions/:id` | Thu hồi / Đăng xuất một phiên làm việc cụ thể từ xa | Đã đăng nhập (User/Admin) |
+| **POST** | `/api/sessions/revoke-all` | Đăng xuất toàn bộ các thiết bị và phiên làm việc khác | Đã đăng nhập (User/Admin) |
+| **GET** | `/api/sessions/active-count` | Đếm tổng số thiết bị đang đăng nhập cùng tài khoản | Đã đăng nhập (User/Admin) |
+
+### 4. Lệnh kiểm thử tự động phân hệ Bảo mật & Phiên:
+```bash
+npx jest tests/security.test.js tests/sessions.test.js
+```
+*(Kết quả: 19/19 tests pass 100%)*
+
+
 ## 👗 CHI TIẾT PHÂN HỆ CỬA HÀNG & QUẢN LÝ SẢN PHẨM (Contributor 4 - Nguyễn Nữ Hồng Nhung)
 
 Phân hệ Quản lý sản phẩm, Danh mục và Cửa hàng thời trang (Shop) do **Nguyễn Nữ Hồng Nhung** (Admin / Owner) đảm nhiệm toàn diện:
