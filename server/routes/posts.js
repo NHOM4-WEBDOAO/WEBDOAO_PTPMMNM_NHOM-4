@@ -95,6 +95,46 @@ router.get('/', async (req, res) => {
 });
 
 /**
+ * GET /api/posts/featured/trending
+ * Lấy Top 5 bài viết thịnh hành nhất và tính toán thời gian đọc (Reading Time)
+ */
+router.get('/featured/trending', async (req, res) => {
+  try {
+    const trendingPosts = await query.all(`
+      SELECT id, title, slug, category, summary, thumbnail, views, likes, created_at,
+             ROUND((LENGTH(content) - LENGTH(REPLACE(content, ' ', '')) + 1) / 200.0 + 0.5) as reading_minutes
+      FROM posts 
+      ORDER BY (COALESCE(views, 0) * 1 + COALESCE(likes, 0) * 3) DESC 
+      LIMIT 5
+    `);
+
+    res.json({
+      success: true,
+      message: 'Lấy danh sách bài viết thịnh hành thành công!',
+      trending: trendingPosts
+    });
+  } catch (error) {
+    console.error('Lỗi lấy bài viết thịnh hành:', error);
+    res.status(500).json({ success: false, message: 'Lỗi máy chủ.' });
+  }
+});
+
+/**
+ * GET /api/posts/tags/popular
+ * Lấy danh sách các Hashtag thời trang thịnh hành nhất
+ */
+router.get('/tags/popular', (req, res) => {
+  const popularTags = [
+    { tag: '#OOTD', name: 'Trang phục trong ngày', count: 12 },
+    { tag: '#Streetwear', name: 'Thời trang dạo phố', count: 9 },
+    { tag: '#Minimalism', name: 'Phong cách tối giản', count: 8 },
+    { tag: '#Summer2026', name: 'Bộ sưu tập mùa hè', count: 15 },
+    { tag: '#AuraFashion', name: 'Phong cách AURA', count: 20 }
+  ];
+  res.json({ success: true, tags: popularTags });
+});
+
+/**
  * GET /api/posts/:id
  * Xem chi tiết bài viết và tăng lượt xem
  */
