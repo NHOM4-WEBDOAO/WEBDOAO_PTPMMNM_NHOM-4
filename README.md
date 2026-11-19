@@ -84,7 +84,7 @@ npm start
 
 ### 3. Truy cập ứng dụng
 Mở trình duyệt web và truy cập vào đường dẫn:  
-👉 **http://localhost:5000**
+ **http://localhost:5000**
 
 ---
 
@@ -97,7 +97,7 @@ Hệ thống đã nạp sẵn cơ sở dữ liệu mẫu cùng 2 tài khoản th
 | **Quản trị viên (Admin)** | `admin@fashionhub.vn` | `Admin@123` | Quản trị toàn hệ thống, xem bảng thống kê doanh thu, duyệt đơn hàng, quản lý sản phẩm |
 | **Khách hàng (User)** | `khachhang@fashionhub.vn` | `User@123` | Trải nghiệm mua sắm, yêu thích sản phẩm, đặt hàng, quản lý hồ sơ và viết bài blog |
 
-> 💡 **Mẹo đăng nhập nhanh:** Tại giao diện Đăng Nhập, hệ thống đã bố trí sẵn các nút bấm chọn nhanh tài khoản thử nghiệm giúp đăng nhập tức thì mà không cần gõ phím thủ công.
+>  **Mẹo đăng nhập nhanh:** Tại giao diện Đăng Nhập, hệ thống đã bố trí sẵn các nút bấm chọn nhanh tài khoản thử nghiệm giúp đăng nhập tức thì mà không cần gõ phím thủ công.
 
 ---
 
@@ -121,7 +121,7 @@ npm test -- --coverage
 
 ---
 
-## 📂 CẤU TRÚC THƯ MỤC MÃ NGUỒN
+## 📂 CẤU TRÚC THƯ MỤC DỰ ÁN CHI TIẾT
 
 ```text
 WEBDOAO_PTPMMNM_NHOM-4/
