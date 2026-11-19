@@ -2,12 +2,14 @@ const request = require('supertest');
 const jwt = require('jsonwebtoken');
 const app = require('../server');
 const { JWT_SECRET } = require('../server/middleware/auth');
+
 describe('Orders Routes (/api/orders) - Kiểm thử bởi Dương Quốc Bảo', () => {
   let adminToken;
   let userToken;
   let createdOrderId;
+  let createdOrderCode;
+
   beforeAll(() => {
-    // Tạo token giả lập cho Admin và Khách hàng
     adminToken = jwt.sign(
       { id: 1, email: 'admin@fashionhub.vn', name: 'Admin Aura', role: 'admin' },
       JWT_SECRET,
@@ -19,6 +21,7 @@ describe('Orders Routes (/api/orders) - Kiểm thử bởi Dương Quốc Bảo'
       { expiresIn: '1h' }
     );
   });
+
   describe('POST /api/orders (Đặt hàng mới)', () => {
     it('trả về 400 nếu thiếu thông tin giao hàng', async () => {
       const res = await request(app)
@@ -31,6 +34,7 @@ describe('Orders Routes (/api/orders) - Kiểm thử bởi Dương Quốc Bảo'
       expect(res.body.success).toBe(false);
       expect(res.body.message).toContain('đầy đủ thông tin giao hàng');
     });
+
     it('trả về 400 nếu giỏ hàng rỗng', async () => {
       const res = await request(app)
         .post('/api/orders')
@@ -45,6 +49,7 @@ describe('Orders Routes (/api/orders) - Kiểm thử bởi Dương Quốc Bảo'
       expect(res.body.success).toBe(false);
       expect(res.body.message).toContain('trống');
     });
+
     it('khách vãng lai đặt hàng thành công trả về mã 201', async () => {
       const res = await request(app)
         .post('/api/orders')
@@ -64,7 +69,9 @@ describe('Orders Routes (/api/orders) - Kiểm thử bởi Dương Quốc Bảo'
       expect(res.body.order).toHaveProperty('order_code');
       expect(res.body.order.total_amount).toBe(778000);
       createdOrderId = res.body.order.id;
+      createdOrderCode = res.body.order.order_code;
     });
+
     it('người dùng đã đăng nhập đặt hàng thành công và lưu user_id', async () => {
       const res = await request(app)
         .post('/api/orders')
@@ -82,11 +89,29 @@ describe('Orders Routes (/api/orders) - Kiểm thử bởi Dương Quốc Bảo'
       expect(res.body.success).toBe(true);
     });
   });
+
+  describe('GET /api/orders/track/:code (Tra cứu đơn hàng)', () => {
+    it('tra cứu thành công đơn hàng theo mã vận đơn hợp lệ', async () => {
+      const res = await request(app).get(`/api/orders/track/${createdOrderCode}`);
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.order.order_code).toBe(createdOrderCode);
+      expect(Array.isArray(res.body.order.items)).toBe(true);
+    });
+
+    it('báo lỗi 404 khi tra cứu mã vận đơn không tồn tại', async () => {
+      const res = await request(app).get('/api/orders/track/ORD-KHONG-TON-TAI-999');
+      expect(res.statusCode).toBe(404);
+      expect(res.body.success).toBe(false);
+    });
+  });
+
   describe('GET /api/orders/my-orders (Lịch sử đơn hàng)', () => {
     it('từ chối khi người dùng chưa đăng nhập (401)', async () => {
       const res = await request(app).get('/api/orders/my-orders');
       expect(res.statusCode).toBe(401);
     });
+
     it('lấy danh sách đơn hàng của người dùng khi có token (200)', async () => {
       const res = await request(app)
         .get('/api/orders/my-orders')
@@ -96,6 +121,23 @@ describe('Orders Routes (/api/orders) - Kiểm thử bởi Dương Quốc Bảo'
       expect(Array.isArray(res.body.orders)).toBe(true);
     });
   });
+
+  describe('PUT /api/orders/:id/cancel (Khách hàng tự hủy đơn hàng)', () => {
+    it('hủy đơn hàng pending thành công (200)', async () => {
+      const res = await request(app).put(`/api/orders/${createdOrderId}/cancel`);
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.message).toContain('thành công');
+    });
+
+    it('từ chối hủy khi đơn hàng đã bị hủy trước đó (400)', async () => {
+      const res = await request(app).put(`/api/orders/${createdOrderId}/cancel`);
+      expect(res.statusCode).toBe(400);
+      expect(res.body.success).toBe(false);
+      expect(res.body.message).toContain('pending');
+    });
+  });
+
   describe('GET /api/orders/all (Quản trị viên lấy tất cả đơn)', () => {
     it('từ chối người dùng thông thường (403)', async () => {
       const res = await request(app)
@@ -103,6 +145,7 @@ describe('Orders Routes (/api/orders) - Kiểm thử bởi Dương Quốc Bảo'
         .set('Authorization', `Bearer ${userToken}`);
       expect(res.statusCode).toBe(403);
     });
+
     it('cho phép Quản trị viên xem tất cả đơn hàng (200)', async () => {
       const res = await request(app)
         .get('/api/orders/all')
@@ -112,6 +155,7 @@ describe('Orders Routes (/api/orders) - Kiểm thử bởi Dương Quốc Bảo'
       expect(Array.isArray(res.body.orders)).toBe(true);
     });
   });
+
   describe('PUT /api/orders/:id/status (Cập nhật trạng thái đơn)', () => {
     it('Quản trị viên cập nhật trạng thái đơn hàng thành công (200)', async () => {
       const res = await request(app)

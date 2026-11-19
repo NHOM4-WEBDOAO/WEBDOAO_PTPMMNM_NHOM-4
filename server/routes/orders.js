@@ -1,13 +1,11 @@
-
 const express = require('express');
 const router = express.Router();
-const crypto = require('crypto');
 const { query } = require('../config/db');
 const { verifyToken, optionalAuth, requireAdmin } = require('../middleware/auth');
 
 /**
  * POST /api/orders
- * Đặt hàng mới
+ * Đặt hàng mới (hỗ trợ cả khách vãng lai và thành viên đăng nhập)
  */
 router.post('/', optionalAuth, async (req, res) => {
   try {
@@ -21,7 +19,6 @@ router.post('/', optionalAuth, async (req, res) => {
       return res.status(400).json({ success: false, message: 'Giỏ hàng của bạn đang trống.' });
     }
 
-    // Calculate total amount
     let totalAmount = 0;
     for (const item of items) {
       totalAmount += (item.price || 0) * (item.quantity || 1);
@@ -47,7 +44,6 @@ router.post('/', optionalAuth, async (req, res) => {
 
     const orderId = result.lastID;
 
-    // Insert order items
     for (const item of items) {
       await query.run(`
         INSERT INTO order_items (order_id, product_id, product_name, price, quantity, size, color, image)
@@ -77,6 +73,57 @@ router.post('/', optionalAuth, async (req, res) => {
   } catch (error) {
     console.error('Lỗi đặt hàng:', error);
     res.status(500).json({ success: false, message: 'Lỗi máy chủ khi tạo đơn hàng.' });
+  }
+});
+
+/**
+ * GET /api/orders/track/:code
+ * Tra cứu thông tin đơn hàng công khai theo mã vận đơn
+ */
+router.get('/track/:code', async (req, res) => {
+  try {
+    const { code } = req.params;
+    const order = await query.get('SELECT * FROM orders WHERE order_code = ?', [code.trim()]);
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy đơn hàng với mã này.' });
+    }
+    const items = await query.all('SELECT * FROM order_items WHERE order_id = ?', [order.id]);
+    res.json({ success: true, order: { ...order, items } });
+  } catch (error) {
+    console.error('Lỗi tra cứu đơn:', error);
+    res.status(500).json({ success: false, message: 'Lỗi máy chủ.' });
+  }
+});
+
+/**
+ * PUT /api/orders/:id/cancel
+ * Khách hàng tự hủy đơn hàng khi đơn còn ở trạng thái chờ duyệt (pending)
+ */
+router.put('/:id/cancel', optionalAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await query.get('SELECT * FROM orders WHERE id = ?', [id]);
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Đơn hàng không tồn tại.' });
+    }
+
+    // Nếu đơn hàng thuộc về một user thì kiểm tra quyền sở hữu
+    if (order.user_id && req.user && order.user_id !== req.user.id && req.user.role !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Bạn không có quyền hủy đơn hàng này.' });
+    }
+
+    if (order.order_status !== 'pending') {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Chỉ có thể hủy đơn hàng khi đang ở trạng thái chờ xử lý (pending).' 
+      });
+    }
+
+    await query.run('UPDATE orders SET order_status = "cancelled" WHERE id = ?', [id]);
+    res.json({ success: true, message: 'Hủy đơn hàng thành công!' });
+  } catch (error) {
+    console.error('Lỗi hủy đơn hàng:', error);
+    res.status(500).json({ success: false, message: 'Lỗi máy chủ.' });
   }
 });
 
