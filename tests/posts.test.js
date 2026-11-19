@@ -54,7 +54,32 @@ describe('Posts Routes (/api/posts)', () => {
     });
   });
 
-  // 2. Tạo bài viết
+  // 2. Bài viết thịnh hành & Hashtags (Trending & Tags API)
+  describe('GET /api/posts/featured/trending & /tags/popular', () => {
+    it('lấy danh sách top bài viết thịnh hành thành công (200)', async () => {
+      const res = await request(app).get('/api/posts/featured/trending');
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(Array.isArray(res.body.trending)).toBe(true);
+    });
+
+    it('bài viết thịnh hành có tính toán số phút đọc ước tính (reading_minutes)', async () => {
+      const res = await request(app).get('/api/posts/featured/trending');
+      expect(res.statusCode).toBe(200);
+      if (res.body.trending.length > 0) {
+        expect(res.body.trending[0]).toHaveProperty('reading_minutes');
+      }
+    });
+
+    it('lấy danh sách các hashtag thời trang phổ biến (200)', async () => {
+      const res = await request(app).get('/api/posts/tags/popular');
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.tags.length).toBeGreaterThan(0);
+    });
+  });
+
+  // 3. Tạo bài viết
   describe('POST /api/posts', () => {
     it('từ chối khi chưa đăng nhập (401)', async () => {
       const res = await request(app)
@@ -93,7 +118,7 @@ describe('Posts Routes (/api/posts)', () => {
     });
   });
 
-  // 3. Chi tiết bài viết & tăng view
+  // 4. Chi tiết bài viết & tăng view
   describe('GET /api/posts/:id', () => {
     it('xem chi tiết bài viết và tăng lượt xem', async () => {
       const res = await request(app).get(`/api/posts/${createdPostId}`);
@@ -110,7 +135,7 @@ describe('Posts Routes (/api/posts)', () => {
     });
   });
 
-  // 4. Sửa bài viết
+  // 5. Sửa bài viết
   describe('PUT /api/posts/:id', () => {
     it('từ chối khi người dùng khác sửa bài viết không phải của mình (403)', async () => {
       const res = await request(app)
@@ -143,7 +168,7 @@ describe('Posts Routes (/api/posts)', () => {
     });
   });
 
-  // 5. Thả tim bài viết (Like Post API - Nguyen Nhu Hong Hanh)
+  // 6. Thả tim bài viết (Like Post API - Nguyen Nhu Hong Hanh)
   describe('POST /api/posts/:id/like', () => {
     it('thả tim bài viết thành công và tăng số lượt thích (200)', async () => {
       const res = await request(app).post(`/api/posts/${createdPostId}/like`);
@@ -161,7 +186,7 @@ describe('Posts Routes (/api/posts)', () => {
     });
   });
 
-  // 6. Xóa bài viết
+  // 7. Xóa bài viết
   describe('DELETE /api/posts/:id', () => {
     it('từ chối người dùng khác xóa bài viết (403)', async () => {
       const res = await request(app)
