@@ -169,6 +169,52 @@ npx jest tests/posts.test.js tests/comments.test.js
 *(Kết quả: 19/19 tests pass 100%)*
 
 ---
+---
+
+## 📦 CHI TIẾT PHÂN HỆ ĐƠN HÀNG, MÃ GIẢM GIÁ & QUẢN TRỊ ADMIN (Contributor 3 - Dương Quốc Bảo)
+
+Phân hệ Quản lý Đơn hàng, Giỏ hàng, Mã giảm giá và Bảng điều khiển Quản trị (Admin Dashboard) do **Dương Quốc Bảo** (Orders & Admin Manager) đảm nhiệm toàn diện:
+
+### 1. Các file đóng góp chính:
+- **Backend API:** 
+  + `server/routes/orders.js`: Xử lý toàn bộ logic đặt hàng, sinh mã vận đơn, lịch sử mua sắm, tra cứu đơn hàng công khai, hủy đơn và cập nhật trạng thái đơn hàng.
+  + `server/routes/coupons.js`: Quản lý kho mã giảm giá (voucher), kiểm tra điều kiện áp dụng theo % hoặc tiền cố định.
+  + `server/routes/stats.js`: Thống kê tổng hợp số liệu doanh thu thời gian thực (loại trừ đơn hủy), tổng số đơn, tổng khách hàng và sản phẩm bán chạy.
+- **Unit Tests:**
+  + `tests/orders.test.js`: Bộ 11 bài kiểm thử tự động quy trình đặt hàng, tra cứu mã đơn và hủy đơn hàng.
+  + `tests/coupons.test.js`: Bộ 6 bài kiểm thử áp dụng mã giảm giá và giới hạn đơn hàng.
+  + `tests/stats.test.js`: Bộ 2 bài kiểm thử thống kê doanh thu và phân quyền Admin.
+- **Frontend Logic & Stylesheet:**
+  + `public/js/admin.js`: Bảng điều khiển quản trị, vẽ card thống kê, bộ lọc trạng thái đơn và duyệt giao hàng.
+  + `public/css/admin.css`: Giao diện Admin chuyên nghiệp, bảng dữ liệu responsive và badges trạng thái.
+
+### 2. Các tính năng nổi bật:
+- **Quy trình đặt hàng linh hoạt:** Hỗ trợ cả khách vãng lai và thành viên đăng nhập, tự động tính tổng tiền giỏ hàng, sinh mã vận đơn `ORD-xxxxxx-xxx`.
+- **Tra cứu đơn hàng trực tuyến:** Khách hàng có thể tra cứu tình trạng vận chuyển theo mã vận đơn mà không cần đăng nhập.
+- **Tự động hủy đơn an toàn:** Cho phép khách hàng hủy đơn hàng nhanh khi đơn còn đang ở trạng thái chờ xử lý (`pending`).
+- **Kho Voucher thông minh:** Áp dụng mã giảm giá phần trăm hoặc giảm trực tiếp tiền mặt, kiểm tra đơn hàng tối thiểu.
+- **Dashboard Admin trực quan:** Thống kê doanh thu thực tế, biểu đồ đơn hàng và thông tin khách hàng mới.
+
+### 3. Danh sách RESTful API Đơn hàng & Quản trị:
+
+| Phương thức | Đường dẫn API | Chức năng chi tiết | Quyền hạn |
+| :---: | :--- | :--- | :---: |
+| **POST** | `/api/orders` | Đặt hàng mới (hỗ trợ cả khách vãng lai và thành viên) | Công khai (Tất cả) |
+| **GET** | `/api/orders/my-orders` | Xem lịch sử đơn hàng của tài khoản đang đăng nhập | Đã đăng nhập (User) |
+| **GET** | `/api/orders/track/:code` | Tra cứu chi tiết tiến độ đơn hàng theo mã vận đơn | Công khai (Tất cả) |
+| **PUT** | `/api/orders/:id/cancel` | Khách hàng tự hủy đơn hàng khi ở trạng thái pending | Người đặt hoặc Admin |
+| **GET** | `/api/orders/all` | Quản trị viên xem và lọc toàn bộ danh sách đơn hàng | Quản trị viên (Admin) |
+| **PUT** | `/api/orders/:id/status` | Quản trị viên duyệt và cập nhật trạng thái đơn hàng | Quản trị viên (Admin) |
+| **GET** | `/api/coupons` | Lấy danh sách mã giảm giá voucher đang kích hoạt | Công khai (Tất cả) |
+| **POST** | `/api/coupons/apply` | Áp dụng mã giảm giá vào đơn hàng | Công khai (Tất cả) |
+| **GET** | `/api/stats/dashboard` | Thống kê tổng doanh thu, số đơn, số người dùng | Quản trị viên (Admin) |
+
+### 4. Lệnh kiểm thử tự động phân hệ Đơn hàng & Admin:
+```bash
+npx jest tests/orders.test.js tests/coupons.test.js tests/stats.test.js
+```
+*(Kết quả: Trọn bộ 19 bài tests PASS 100%)*
+
 
 ## 👗 CHI TIẾT PHÂN HỆ CỬA HÀNG & QUẢN LÝ SẢN PHẨM (Contributor 4 - Nguyễn Nữ Hồng Nhung)
 
