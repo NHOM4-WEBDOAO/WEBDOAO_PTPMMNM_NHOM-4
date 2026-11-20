@@ -42,7 +42,7 @@ app.use('/api/stats', require('./server/routes/stats'));
   app.use('/api/wishlist', require('./server/routes/wishlist'));
   app.use('/api/reviews', require('./server/routes/reviews'));
 
-
+  app.use('/api/categories', require('./server/routes/categories'));
 // ==========================================================
 
 
