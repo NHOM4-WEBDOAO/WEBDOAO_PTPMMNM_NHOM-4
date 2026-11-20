@@ -90,6 +90,45 @@ Tôn trọng, lịch sự và hỗ trợ lẫn nhau trong nhóm eheh.
 
 ---
 
+## 👤 CHI TIẾT PHÂN HỆ HỒ SƠ CÁ NHÂN & ĐIỀU PHỐI HỆ THỐNG (Maintainer / Trưởng nhóm - Phan Tấn Kiệt)
+
+Phân hệ Quản lý hồ sơ cá nhân, Lịch sử mua hàng và Điều phối kiến trúc hạ tầng hệ thống do **Phan Tấn Kiệt** (`@Kietphan2812`) - **Maintainer / Trưởng nhóm (Quyền Maintain)** đảm nhiệm:
+
+### 1. Các file đóng góp chính:
+- **Backend API:** `server/routes/user.js` (Xử lý xem thông tin cá nhân, cập nhật hồ sơ, upload đổi avatar qua Multer, truy xuất lịch sử đơn hàng).
+- **Unit Tests:** `tests/user.test.js` (Bộ 4 bài kiểm thử tự động đạt 100% PASS).
+- **Frontend Logic & Giao diện:**
+  - `public/profile.html`: Trang tổng quan hồ sơ người dùng, form chỉnh sửa và bảng lịch sử đơn hàng.
+  - `public/js/profile.js`: Logic gọi API lấy thông tin người dùng, cập nhật thời gian thực, upload ảnh đại diện và xem trạng thái đơn hàng.
+- **Hạ tầng & Kiến trúc mã nguồn mở (DevSecOps):**
+  - `server.js`: Khởi tạo Express server, kết nối routes của 5 thành viên, xử lý SPA fallback và Global Error Handler.
+  - `server/config/db.js`: Khởi tạo cơ sở dữ liệu SQLite, định nghĩa 11 bảng quan hệ và seed dữ liệu mẫu ban đầu.
+  - `server/config/mailer.js`: Cấu hình dịch vụ email Nodemailer phục vụ gửi mã OTP kích hoạt và xác thực 2FA.
+  - `.github/workflows/ci.yml`: Thiết lập CI/CD pipeline tự động build và chạy test trên môi trường Ubuntu 20.x & 22.x.
+  - Bộ tài liệu chuẩn Open Source: `README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `SECURITY.md`.
+
+### 2. Các tính năng nổi bật:
+- **Quản lý hồ sơ người dùng:** Xem chi tiết họ tên, email, số điện thoại, địa chỉ và ngày đăng ký tài khoản.
+- **Cập nhật thông tin & Avatar:** Cho phép chỉnh sửa thông tin giao hàng và tải lên ảnh đại diện cá nhân sắc nét.
+- **Theo dõi lịch sử đơn hàng:** Xem danh sách toàn bộ các đơn hàng đã mua, ngày đặt, tổng tiền và tiến độ giao hàng.
+- **Điều phối Git Flow:** Tạo Issues phân công công việc, review code và duyệt merge tất cả các Pull Requests của toàn bộ thành viên.
+
+### 3. Danh sách RESTful API Hồ sơ cá nhân (User Profile):
+
+| STT | Phương thức | Đường dẫn API | Chức năng chi tiết | Phân quyền |
+| :---: | :---: | :--- | :--- | :---: |
+| 1 | **GET** | `/api/user/profile` | Lấy thông tin cá nhân kèm danh sách đơn hàng của người dùng | Đã đăng nhập (User) |
+| 2 | **PUT** | `/api/user/profile` | Cập nhật họ tên, số điện thoại và địa chỉ giao hàng | Đã đăng nhập (User) |
+| 3 | **POST** | `/api/user/avatar` | Tải lên và cập nhật ảnh đại diện Avatar qua Multer | Đã đăng nhập (User) |
+
+### 4. Lệnh kiểm thử tự động phân hệ Hồ sơ cá nhân:
+```bash
+npx jest tests/user.test.js --forceExit
+```
+*(Kết quả: 4/4 tests pass 100%)*
+
+---
+
 ## 🛡️ CHI TIẾT PHÂN HỆ BẢO MẬT & QUẢN LÝ PHIÊN (Contributor 1 - Nguyễn Thế Nhất)
 
 Phân hệ An toàn thông tin, Xác thực 2 bước (2FA via Email OTP) và Quản lý phiên truy cập (Session Audit) do **Nguyễn Thế Nhất** (Security & Auth Officer) đảm nhiệm toàn diện:
