@@ -218,34 +218,58 @@ npx jest tests/orders.test.js tests/coupons.test.js tests/stats.test.js
 
 ## 👗 CHI TIẾT PHÂN HỆ CỬA HÀNG & QUẢN LÝ SẢN PHẨM (Contributor 4 - Nguyễn Nữ Hồng Nhung)
 
-Phân hệ Quản lý sản phẩm, Danh mục và Cửa hàng thời trang (Shop) do **Nguyễn Nữ Hồng Nhung** (Admin / Owner) đảm nhiệm toàn diện:
+Phân hệ Quản lý sản phẩm, Danh mục thời trang, Danh sách yêu thích và Đánh giá sao do **Nguyễn Nữ Hồng Nhung** (`@tho2050`) - **Product Manager (Quyền Write)** đảm nhiệm và phát triển toàn diện:
 
 ### 1. Các file đóng góp chính:
-- **Backend API:** `server/routes/products.js` (Xử lý toàn bộ logic CRUD sản phẩm, phân loại danh mục, tìm kiếm, lọc theo khoảng giá, sắp xếp giá bán và upload hình ảnh qua Multer).
-- **Unit Tests:** `tests/products.test.js` (Bộ 8 bài kiểm thử tự động độc lập đạt PASS 100%).
-- **Frontend Logic:** `public/js/shop.js` (Hiển thị danh sách sản phẩm dạng lưới, bộ lọc danh mục động, tìm kiếm thời gian thực, xem chi tiết sản phẩm, chọn size/màu và thêm vào giỏ hàng).
-- **Frontend Stylesheet:** `public/css/shop.css` (Giao diện cửa hàng thời trang responsive, thiết kế card sản phẩm hiện đại, hiệu ứng hover, badge giảm giá và bộ lọc giá).
+- **Backend API (4 phân hệ con hoàn chỉnh):**
+  - `server/routes/products.js`: Xử lý CRUD sản phẩm thời trang, tìm kiếm, lọc theo giá/danh mục, upload ảnh qua Multer.
+  - `server/routes/categories.js`: Quản lý danh mục thời trang, tự động tạo slug chuẩn SEO tiếng Việt không dấu, đếm số lượng sản phẩm (`product_count`).
+  - `server/routes/wishlist.js`: Quản lý danh sách sản phẩm yêu thích của khách hàng, ràng buộc quan hệ SQLite CASCADE.
+  - `server/routes/reviews.js`: Đánh giá và xếp hạng sao sản phẩm (1-5 sao), tính điểm trung bình, tích hợp Rate Limiter bảo mật chống spam.
+- **Unit Tests (4 bộ kiểm thử tự động độc lập - 33 bài test PASS 100%):**
+  - `tests/products.test.js`: 12 bài kiểm thử API Sản phẩm.
+  - `tests/categories.test.js`: 6 bài kiểm thử API Danh mục thời trang.
+  - `tests/wishlist.test.js`: 7 bài kiểm thử API Sản phẩm yêu thích.
+  - `tests/reviews.test.js`: 8 bài kiểm thử API Đánh giá & Xếp hạng sao.
+- **Frontend Logic & Giao diện:**
+  - `public/js/shop.js`: Logic render danh sách sản phẩm dạng lưới, bộ lọc danh mục động, tìm kiếm thời gian thực, popup modal chi tiết sản phẩm, chọn size/màu và thêm vào giỏ hàng/yêu thích.
+  - `public/css/shop.css`: Stylesheet responsive cho cửa hàng thời trang, card sản phẩm hiện đại, hiệu ứng hover, badge giảm giá và bộ lọc giá thông minh.
 
 ### 2. Các tính năng nổi bật:
-- **Lưới sản phẩm thời trang hiện đại:** Hiển thị ảnh sản phẩm sắc nét, tên, giá bán, giá gốc và nhãn giảm giá nổi bật.
-- **Bộ lọc đa tiêu chí thông minh:** Lọc theo danh mục (Áo, Quần, Áo khoác, Váy đầm, Phụ kiện), tìm kiếm theo từ khóa và lọc theo khoảng giá.
-- **Sắp xếp linh hoạt:** Sắp xếp sản phẩm theo giá tăng dần, giá giảm dần hoặc sản phẩm mới nhất.
-- **Modal chi tiết sản phẩm:** Xem ảnh lớn, mô tả chất liệu, chọn Size (S, M, L, XL), chọn màu sắc và số lượng trước khi thêm vào giỏ hàng.
-- **Quản lý sản phẩm (CRUD dành cho Admin):** Thêm sản phẩm mới với ảnh tải lên từ máy tính, chỉnh sửa thông tin giá và tồn kho, xóa sản phẩm.
+- **Lưới sản phẩm thời trang hiện đại:** Hiển thị hình ảnh sắc nét, tên sản phẩm, giá bán, giá gốc và nhãn giảm giá tự động.
+- **Bộ lọc đa tiêu chí thông minh:** Lọc theo danh mục thời trang (Áo, Quần, Áo khoác, Váy đầm, Phụ kiện), tìm kiếm theo từ khóa và khoảng giá bán.
+- **Quản lý danh mục chuẩn SEO:** Tự động tạo slug chuẩn từ tên tiếng Việt có dấu, đếm số lượng sản phẩm thực tế theo từng nhóm hàng.
+- **Danh sách yêu thích (Wishlist):** Lưu các món đồ thời trang yêu thích vào tài khoản cá nhân, xem và quản lý tiện lợi.
+- **Đánh giá & Xếp hạng sao (Reviews):** Khách hàng đánh giá chất lượng sản phẩm từ 1 đến 5 sao kèm nhận xét, hiển thị điểm trung bình và tổng lượt đánh giá.
+- **Quản trị viên (Admin CRUD):** Quản trị viên có toàn quyền thêm, cập nhật, xóa sản phẩm và danh mục thời trang.
 
-### 3. Danh sách RESTful API Cửa hàng (Shop & Products):
+### 3. Danh sách đầy đủ 18 RESTful API Phân hệ Cửa hàng (Shop, Categories, Wishlist & Reviews):
 
-| Phương thức | Đường dẫn API | Chức năng chi tiết | Quyền hạn |
-| :---: | :--- | :--- | :---: |
-| **GET** | `/api/products/categories/all` | Lấy toàn bộ danh mục sản phẩm | Công khai (Tất cả) |
-| **GET** | `/api/products` | Lấy danh sách sản phẩm (hỗ trợ lọc theo `category`, `search`, `minPrice`, `maxPrice`, `sort`) | Công khai (Tất cả) |
-| **GET** | `/api/products/:id` | Xem chi tiết sản phẩm theo ID hoặc Slug | Công khai (Tất cả) |
-| **POST** | `/api/products` | Thêm sản phẩm thời trang mới (hỗ trợ upload ảnh Multer) | Quản trị viên (Admin) |
-| **PUT** | `/api/products/:id` | Cập nhật thông tin, giá bán và tồn kho sản phẩm | Quản trị viên (Admin) |
-| **DELETE**| `/api/products/:id` | Xóa sản phẩm khỏi hệ thống | Quản trị viên (Admin) |
+| STT | Phương thức | Đường dẫn API | Chức năng chi tiết | Phân quyền |
+| :---: | :---: | :--- | :--- | :---: |
+| 1 | **GET** | `/api/products` | Lấy danh sách sản phẩm (hỗ trợ lọc `category`, `search`, `minPrice`, `maxPrice`, `sort`) | Công khai |
+| 2 | **GET** | `/api/products/:id` | Xem chi tiết sản phẩm theo ID hoặc Slug | Công khai |
+| 3 | **GET** | `/api/products/categories/all` | Lấy toàn bộ danh mục sản phẩm | Công khai |
+| 4 | **POST** | `/api/products` | Thêm sản phẩm thời trang mới (hỗ trợ upload ảnh qua Multer) | Quản trị viên (Admin) |
+| 5 | **PUT** | `/api/products/:id` | Cập nhật thông tin, giá bán và số lượng tồn kho sản phẩm | Quản trị viên (Admin) |
+| 6 | **DELETE**| `/api/products/:id` | Xóa sản phẩm khỏi hệ thống | Quản trị viên (Admin) |
+| 7 | **GET** | `/api/categories` | Lấy danh sách toàn bộ danh mục kèm số lượng sản phẩm (`product_count`) | Công khai |
+| 8 | **GET** | `/api/categories/:slug` | Xem chi tiết danh mục và danh sách sản phẩm thuộc danh mục | Công khai |
+| 9 | **POST** | `/api/categories` | Quản trị viên thêm mới danh mục thời trang (tự động tạo slug) | Quản trị viên (Admin) |
+| 10 | **PUT** | `/api/categories/:id` | Quản trị viên cập nhật tên, mô tả hoặc ảnh danh mục | Quản trị viên (Admin) |
+| 11 | **DELETE**| `/api/categories/:id` | Quản trị viên xóa danh mục thời trang | Quản trị viên (Admin) |
+| 12 | **GET** | `/api/wishlist` | Lấy danh sách sản phẩm yêu thích của người dùng hiện tại | Đã đăng nhập (User) |
+| 13 | **POST** | `/api/wishlist/:productId` | Thêm sản phẩm vào danh sách yêu thích | Đã đăng nhập (User) |
+| 14 | **DELETE**| `/api/wishlist/:productId` | Xóa sản phẩm khỏi danh sách yêu thích | Đã đăng nhập (User) |
+| 15 | **GET** | `/api/wishlist/check/:productId`| Kiểm tra trạng thái sản phẩm đã được yêu thích hay chưa | Đã đăng nhập (User) |
+| 16 | **GET** | `/api/reviews/product/:productId`| Xem danh sách đánh giá của sản phẩm và điểm trung bình (`avg_rating`) | Công khai |
+| 17 | **POST** | `/api/reviews` | Khách hàng gửi đánh giá (1 - 5 sao) kèm nhận xét (bảo vệ bằng Rate Limiter) | Đã đăng nhập (User) |
+| 18 | **DELETE**| `/api/reviews/:id` | Xóa đánh giá (chỉ cho phép chính chủ hoặc Quản trị viên) | Đã đăng nhập (User/Admin) |
 
-### 4. Lệnh kiểm thử tự động phân hệ Sản phẩm:
+### 4. Lệnh kiểm thử tự động toàn diện phân hệ Cửa hàng (33/33 Tests PASS 100%):
+
+Chạy toàn bộ 4 file Unit Tests của Contributor 4:
 ```bash
-npx jest tests/products.test.js
+npx jest tests/products.test.js tests/categories.test.js tests/wishlist.test.js tests/reviews.test.js --runInBand --forceExit
 ```
-*(Kết quả: 8/8 tests pass 100%)*
+*(Kết quả: 4 Test Suites, 33 Tests PASS 100% hoàn hảo!)*
