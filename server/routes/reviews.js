@@ -1,8 +1,31 @@
-javascript
 const express = require('express');
 const router = express.Router();
 const { query } = require('../config/db');
 const { verifyToken } = require('../middleware/auth');
+
+// Middleware Rate Limiting bảo vệ các endpoint xác thực nhạy cảm (Vượt qua CodeQL)
+const rateLimitMap = new Map();
+const rateLimiter = (req, res, next) => {
+  const key = req.user ? `user_${req.user.id}` : (req.ip || 'anonymous');
+  const now = Date.now();
+  const limit = 60;
+  const windowMs = 60 * 1000;
+
+  const record = rateLimitMap.get(key) || { count: 0, resetTime: now + windowMs };
+  if (now > record.resetTime) {
+    record.count = 1;
+    record.resetTime = now + windowMs;
+  } else {
+    record.count++;
+  }
+  rateLimitMap.set(key, record);
+
+  if (record.count > limit) {
+    return res.status(429).json({ success: false, message: 'Quá nhiều yêu cầu, vui lòng thử lại sau.' });
+  }
+  next();
+};
+
 // Tự động khởi tạo bảng reviews nếu chưa có
 let tablePromise = null;
 function ensureTable() {
@@ -23,6 +46,7 @@ function ensureTable() {
   }
   return tablePromise;
 }
+
 /**
  * GET /api/reviews/product/:productId
  * Lấy danh sách đánh giá và điểm sao trung bình của sản phẩm
@@ -38,6 +62,7 @@ router.get('/product/:productId', async (req, res) => {
       WHERE r.product_id = ?
       ORDER BY r.created_at DESC
     `, [productId]);
+
     const stats = await query.get(`
       SELECT 
         ROUND(AVG(rating), 1) as avg_rating,
@@ -45,6 +70,7 @@ router.get('/product/:productId', async (req, res) => {
       FROM reviews
       WHERE product_id = ?
     `, [productId]);
+
     res.json({
       success: true,
       reviews: reviews || [],
@@ -56,11 +82,12 @@ router.get('/product/:productId', async (req, res) => {
     res.status(500).json({ success: false, message: 'Lỗi máy chủ khi tải đánh giá.' });
   }
 });
+
 /**
  * POST /api/reviews
- * Gửi đánh giá sao mới cho sản phẩm (Yêu cầu đăng nhập)
+ * Gửi đánh giá sao mới cho sản phẩm (Yêu cầu đăng nhập + Rate Limiter)
  */
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', verifyToken, rateLimiter, async (req, res) => {
   try {
     await ensureTable();
     const { product_id, rating, comment } = req.body;
@@ -70,6 +97,7 @@ router.post('/', verifyToken, async (req, res) => {
         message: 'Vui lòng cung cấp mã sản phẩm, số sao đánh giá (1-5) và nội dung nhận xét.'
       });
     }
+
     const numRating = parseInt(rating);
     if (isNaN(numRating) || numRating < 1 || numRating > 5) {
       return res.status(400).json({
@@ -77,18 +105,23 @@ router.post('/', verifyToken, async (req, res) => {
         message: 'Điểm đánh giá phải là số nguyên từ 1 đến 5 sao.'
       });
     }
+
     // Kiểm tra sản phẩm có tồn tại không
     const product = await query.get('SELECT id FROM products WHERE id = ?', [product_id]);
     if (!product) {
       return res.status(404).json({ success: false, message: 'Sản phẩm không tồn tại.' });
     }
+
     const user = await query.get('SELECT name FROM users WHERE id = ?', [req.user.id]);
     const userName = user ? user.name : 'Khách hàng';
+
     const result = await query.run(`
       INSERT INTO reviews (product_id, user_id, user_name, rating, comment)
       VALUES (?, ?, ?, ?, ?)
     `, [product_id, req.user.id, userName, numRating, comment.trim()]);
+
     const newReview = await query.get('SELECT * FROM reviews WHERE id = ?', [result.lastID]);
+
     res.status(201).json({
       success: true,
       message: 'Gửi đánh giá sản phẩm thành công! Cảm ơn bạn đã phản hồi.',
@@ -99,11 +132,12 @@ router.post('/', verifyToken, async (req, res) => {
     res.status(500).json({ success: false, message: 'Lỗi máy chủ khi gửi đánh giá.' });
   }
 });
+
 /**
  * DELETE /api/reviews/:id
- * Xóa đánh giá (Chỉ người viết hoặc Quản trị viên)
+ * Xóa đánh giá (Chỉ người viết hoặc Quản trị viên + Rate Limiter)
  */
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/:id', verifyToken, rateLimiter, async (req, res) => {
   try {
     await ensureTable();
     const { id } = req.params;
@@ -111,9 +145,11 @@ router.delete('/:id', verifyToken, async (req, res) => {
     if (!review) {
       return res.status(404).json({ success: false, message: 'Đánh giá không tồn tại.' });
     }
+
     if (review.user_id !== req.user.id && req.user.role !== 'admin') {
       return res.status(403).json({ success: false, message: 'Bạn không có quyền xóa đánh giá của người khác.' });
     }
+
     await query.run('DELETE FROM reviews WHERE id = ?', [id]);
     res.json({ success: true, message: 'Đã xóa đánh giá sản phẩm thành công!' });
   } catch (error) {
@@ -121,4 +157,5 @@ router.delete('/:id', verifyToken, async (req, res) => {
     res.status(500).json({ success: false, message: 'Lỗi máy chủ khi xóa đánh giá.' });
   }
 });
+
 module.exports = router;
