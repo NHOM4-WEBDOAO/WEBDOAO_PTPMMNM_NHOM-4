@@ -40,6 +40,9 @@ app.use('/api/stats', require('./server/routes/stats'));
  app.use('/api/products', require('./server/routes/products'));
 
   app.use('/api/wishlist', require('./server/routes/wishlist'));
+  app.use('/api/reviews', require('./server/routes/reviews'));
+
+
 // ==========================================================
 
 
